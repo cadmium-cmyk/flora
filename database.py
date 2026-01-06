@@ -1,0 +1,48 @@
+import sqlite3
+from datetime import datetime
+
+def init_db():
+    conn = sqlite3.connect('flora.db')
+    conn.execute('''CREATE TABLE IF NOT EXISTS gardens 
+                    (id INTEGER PRIMARY KEY, name TEXT)''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS plants 
+                    (id INTEGER PRIMARY KEY, name TEXT, garden_id INTEGER, 
+                     planting_date DATE, sunlight TEXT, water_interval INTEGER DEFAULT 7,
+                     species_id INTEGER)''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS journal_entries 
+                    (id INTEGER PRIMARY KEY, plant_id INTEGER, 
+                     entry_date DATE, note TEXT, status TEXT, photo TEXT)''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS care_guides 
+                    (id INTEGER PRIMARY KEY, species TEXT, sunlight TEXT, interval INTEGER)''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS tasks 
+                    (id INTEGER PRIMARY KEY, description TEXT, due_date DATE, completed INTEGER DEFAULT 0)''')
+    
+    cursor = conn.execute("SELECT COUNT(*) FROM gardens")
+    if cursor.fetchone()[0] == 0:
+        conn.execute("INSERT INTO gardens (name) VALUES ('Home Garden')")
+
+    cursor = conn.execute("SELECT COUNT(*) FROM care_guides")
+    if cursor.fetchone()[0] == 0:
+        conn.executemany("INSERT INTO care_guides (species, sunlight, interval) VALUES (?, ?, ?)", [
+            ('Monstera Deliciosa', 'Partial Shade', 7),
+            ('Snake Plant', 'Full Shade', 14),
+            ('Pothos', 'Partial Shade', 5),
+            ('Lavender', 'Full Sun', 3),
+            ('Succulent', 'Full Sun', 10)
+        ])
+    conn.commit()
+    conn.close()
+
+def calculate_age(date_str):
+    if not date_str: return "New"
+    try:
+        born = datetime.strptime(date_str, "%Y-%m-%d").date()
+        today = datetime.now().date()
+        diff = today - born
+        days = diff.days
+        if days <= 0: return "Today"
+        if days < 30: return f"{days}d"
+        months = days // 30
+        if months < 12: return f"{months}m"
+        return f"{months // 12}y"
+    except: return "New"
