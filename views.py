@@ -2,6 +2,7 @@ import sqlite3
 import os
 from gi.repository import Gtk, Adw
 from ui_components import AddJournalDialog, EditJournalDialog
+from database import get_db_path
 
 class PlantDetailView(Adw.NavigationPage):
     def __init__(self, plant_id, plant_name):
@@ -25,7 +26,7 @@ class PlantDetailView(Adw.NavigationPage):
 
     def refresh(self):
         while (c := self.list_box.get_first_child()): self.list_box.remove(c)
-        conn = sqlite3.connect('flora.db'); count = 0
+        conn = sqlite3.connect(get_db_path()); count = 0
         for eid, date, note, status, photo in conn.execute("SELECT id, entry_date, note, status, photo FROM journal_entries WHERE plant_id = ? ORDER BY id DESC", (self.plant_id,)):
             count += 1
             row = Adw.ActionRow(title=note, subtitle=date, activatable=True)
@@ -38,4 +39,4 @@ class PlantDetailView(Adw.NavigationPage):
         conn.close(); self.journal_stack.set_visible_child_name("list" if count > 0 else "empty")
 
     def delete_entry(self, eid):
-        conn = sqlite3.connect('flora.db'); conn.execute("DELETE FROM journal_entries WHERE id=?", (eid,)); conn.commit(); conn.close(); self.refresh()
+        conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM journal_entries WHERE id=?", (eid,)); conn.commit(); conn.close(); self.refresh()

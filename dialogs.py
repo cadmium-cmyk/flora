@@ -3,6 +3,8 @@ import os
 from datetime import datetime
 from gi.repository import Gtk, Adw
 from database import calculate_age
+from database import get_db_path
+
 
 def apply_margins(widget, amount=18):
     widget.set_margin_start(amount); widget.set_margin_end(amount)
@@ -32,7 +34,7 @@ class AddTaskDialog(Adw.Window):
     def on_add(self, _):
         desc = self.desc_entry.get_text().strip()
         if desc:
-            conn = sqlite3.connect('flora.db')
+            conn = sqlite3.connect(get_db_path())
             conn.execute("INSERT INTO tasks (description, due_date) VALUES (?, date('now'))", (desc,))
             conn.commit(); conn.close(); self.callback(); self.close()
 
@@ -43,7 +45,7 @@ class AddPlantDialog(Adw.Window):
         content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12); apply_margins(content)
         group = Adw.PreferencesGroup(); self.name_entry = Adw.EntryRow(title="Nickname")
         self.guide_ids, self.guide_model = [0], Gtk.StringList.new(["Manual Entry"])
-        conn = sqlite3.connect('flora.db')
+        conn = sqlite3.connect(get_db_path())
         for gid, spec in conn.execute("SELECT id, species FROM care_guides ORDER BY species"):
             self.guide_ids.append(gid); self.guide_model.append(spec)
         self.guide_row = Adw.ComboRow(title="Species", model=self.guide_model)
@@ -64,7 +66,7 @@ class AddPlantDialog(Adw.Window):
     def on_guide_selected(self, *args):
         idx = self.guide_row.get_selected(); guide_id = self.guide_ids[idx]
         if guide_id == 0: return
-        conn = sqlite3.connect('flora.db'); res = conn.execute("SELECT sunlight, interval FROM care_guides WHERE id=?", (guide_id,)).fetchone(); conn.close()
+        conn = sqlite3.connect(get_db_path()); res = conn.execute("SELECT sunlight, interval FROM care_guides WHERE id=?", (guide_id,)).fetchone(); conn.close()
         if res:
             self.interval_spin.set_value(res[1])
             for i, s in enumerate(["Full Sun", "Partial Shade", "Full Shade"]):
@@ -75,7 +77,7 @@ class AddPlantDialog(Adw.Window):
             gid = self.garden_ids[self.garden_row.get_selected()]; sun = self.sun_model.get_string(self.sun_row.get_selected())
             iv = int(self.interval_spin.get_value()); spec_id = self.guide_ids[self.guide_row.get_selected()]
             local_today = datetime.now().strftime("%Y-%m-%d")
-            conn = sqlite3.connect('flora.db')
+            conn = sqlite3.connect(get_db_path())
             conn.execute("INSERT INTO plants (name, garden_id, planting_date, sunlight, water_interval, species_id) VALUES (?, ?, ?, ?, ?, ?)", 
                          (self.name_entry.get_text(), gid, local_today, sun, iv, spec_id))
             conn.commit(); conn.close(); self.callback(); self.close()

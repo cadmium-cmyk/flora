@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Flora
+Comment=Manage your home garden and plants
+Exec=flora.sh
+Icon=com.github.cadmiumcmyk.Flora
+Terminal=false
+Type=Application
+Categories=Utility;GTK;
+StartupNotify=true

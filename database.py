@@ -1,8 +1,16 @@
 import sqlite3
+import os
 from datetime import datetime
 
+def get_db_path():
+    data_dir = os.path.expanduser("~/.local/share/flora")
+    # In a Flatpak, this usually maps to ~/.var/app/org.gnome.Flora/data
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, exist_ok=True)
+    return os.path.join(data_dir, 'flora.db')
+
 def init_db():
-    conn = sqlite3.connect('flora.db')
+    conn = sqlite3.connect(get_db_path())
     conn.execute('''CREATE TABLE IF NOT EXISTS gardens 
                     (id INTEGER PRIMARY KEY, name TEXT)''')
     conn.execute('''CREATE TABLE IF NOT EXISTS plants 

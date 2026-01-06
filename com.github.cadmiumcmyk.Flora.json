@@ -1,0 +1,34 @@
+{
+  "app-id": "com.github.cadmiumcmyk.Flora",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "49",
+  "sdk": "org.gnome.Sdk",
+  "command": "flora.sh",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--filesystem=xdg-data",
+    "--talk-name=org.freedesktop.Notifications"
+  ],
+  "modules": [
+    {
+      "name": "flora",
+      "buildsystem": "simple",
+      "build-commands": [
+      "install -D main.py /app/bin/main.py",
+      "install -D database.py /app/bin/database.py",
+      "install -D ui_components.py /app/bin/ui_components.py",
+      "install -D views.py /app/bin/views.py",
+      "install -D flora.sh /app/bin/flora.sh"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "."
+        }
+      ]
+    }
+  ]
+}

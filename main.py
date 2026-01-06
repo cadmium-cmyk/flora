@@ -3,6 +3,7 @@ import os
 import sqlite3
 import gi
 from datetime import datetime
+from database import get_db_path
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -93,7 +94,7 @@ class FloraWindow(Adw.ApplicationWindow):
 
     def refresh_tasks(self):
         while (c := self.tasks_list.get_first_child()): self.tasks_list.remove(c)
-        conn = sqlite3.connect('flora.db'); count = 0
+        conn = sqlite3.connect(get_db_path()); count = 0
         for tid, desc, due in conn.execute("SELECT id, description, due_date FROM tasks WHERE completed=0 ORDER BY id DESC"):
             count += 1; row = Adw.ActionRow(title=desc, subtitle=f"Added: {due}")
             done_btn = Gtk.Button(icon_name="object-select-symbolic", css_classes=["flat", "success"], valign=Gtk.Align.CENTER); done_btn.connect("clicked", lambda b, i=tid: self.complete_task(i))
@@ -102,14 +103,14 @@ class FloraWindow(Adw.ApplicationWindow):
         conn.close(); self.tasks_stack.set_visible_child_name("list" if count > 0 else "empty")
 
     def complete_task(self, tid):
-        conn = sqlite3.connect('flora.db'); conn.execute("UPDATE tasks SET completed=1 WHERE id=?", (tid,)); conn.commit(); conn.close(); self.refresh_tasks()
+        conn = sqlite3.connect(get_db_path()); conn.execute("UPDATE tasks SET completed=1 WHERE id=?", (tid,)); conn.commit(); conn.close(); self.refresh_tasks()
 
     def delete_task(self, tid):
-        conn = sqlite3.connect('flora.db'); conn.execute("DELETE FROM tasks WHERE id=?", (tid,)); conn.commit(); conn.close(); self.refresh_tasks()
+        conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM tasks WHERE id=?", (tid,)); conn.commit(); conn.close(); self.refresh_tasks()
 
     def refresh_dashboard(self):
         while (c := self.thirsty_list.get_first_child()): self.thirsty_list.remove(c)
-        conn = sqlite3.connect('flora.db'); query = "SELECT p.id, p.name, p.water_interval, (SELECT entry_date FROM journal_entries WHERE plant_id = p.id AND status = 'Watering' ORDER BY id DESC LIMIT 1) as last_water FROM plants p"
+        conn = sqlite3.connect(get_db_path()); query = "SELECT p.id, p.name, p.water_interval, (SELECT entry_date FROM journal_entries WHERE plant_id = p.id AND status = 'Watering' ORDER BY id DESC LIMIT 1) as last_water FROM plants p"
         thirsty_count = 0
         for pid, name, interval, last_water in conn.execute(query):
             needs_water = False
@@ -125,7 +126,7 @@ class FloraWindow(Adw.ApplicationWindow):
     def refresh_library(self):
         while (c := self.lib_list.get_first_child()): self.lib_list.remove(c)
         s = self.lib_search.get_text().strip(); idx = self.filter_row.get_selected(); gid = self.filter_garden_ids[idx] if idx < len(self.filter_garden_ids) else None
-        conn = sqlite3.connect('flora.db'); query = "SELECT p.id, p.name, g.name, p.planting_date, p.water_interval FROM plants p LEFT JOIN gardens g ON p.garden_id = g.id"
+        conn = sqlite3.connect(get_db_path()); query = "SELECT p.id, p.name, g.name, p.planting_date, p.water_interval FROM plants p LEFT JOIN gardens g ON p.garden_id = g.id"
         conditions = []
         if gid: conditions.append(f"p.garden_id = {gid}")
         if s: conditions.append(f"p.name LIKE '%{s}%'")
@@ -142,7 +143,7 @@ class FloraWindow(Adw.ApplicationWindow):
     def refresh_gardens(self):
         while (c := self.garden_list.get_first_child()): self.garden_list.remove(c)
         s = self.garden_search.get_text().strip(); self.filter_garden_ids = [None]; self.filter_model.splice(1, self.filter_model.get_n_items() - 1, [])
-        conn = sqlite3.connect('flora.db'); query = "SELECT g.id, g.name, COUNT(p.id) FROM gardens g LEFT JOIN plants p ON g.id = p.garden_id"
+        conn = sqlite3.connect(get_db_path()); query = "SELECT g.id, g.name, COUNT(p.id) FROM gardens g LEFT JOIN plants p ON g.id = p.garden_id"
         if s: query += f" WHERE g.name LIKE '%{s}%'"
         query += " GROUP BY g.id"
         count = 0
@@ -154,7 +155,7 @@ class FloraWindow(Adw.ApplicationWindow):
 
     def refresh_guides(self):
         while (c := self.guides_list.get_first_child()): self.guides_list.remove(c)
-        s = self.guide_search.get_text().strip(); conn = sqlite3.connect('flora.db'); query = "SELECT id, species, sunlight, interval FROM care_guides"
+        s = self.guide_search.get_text().strip(); conn = sqlite3.connect(get_db_path()); query = "SELECT id, species, sunlight, interval FROM care_guides"
         if s: query += f" WHERE species LIKE '%{s}%'"
         for gid, spec, sun, iv in conn.execute(query + " ORDER BY species"):
             row = Adw.ActionRow(title=spec, subtitle=f"Sun: {sun} | Water: {iv}d"); row.add_prefix(Gtk.Image.new_from_icon_name("help-about-symbolic"))
@@ -162,16 +163,16 @@ class FloraWindow(Adw.ApplicationWindow):
         conn.close()
 
     def quick_water(self, pid):
-        conn = sqlite3.connect('flora.db'); conn.execute("INSERT INTO journal_entries (plant_id, entry_date, note, status) VALUES (?, date('now'), 'Watered', 'Watering')", (pid,)); conn.commit(); conn.close(); self.refresh_all()
+        conn = sqlite3.connect(get_db_path()); conn.execute("INSERT INTO journal_entries (plant_id, entry_date, note, status) VALUES (?, date('now'), 'Watered', 'Watering')", (pid,)); conn.commit(); conn.close(); self.refresh_all()
 
     def on_delete_plant(self, pid):
-        conn = sqlite3.connect('flora.db'); conn.execute("DELETE FROM plants WHERE id=?", (pid,)); conn.commit(); conn.close(); self.refresh_all()
+        conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM plants WHERE id=?", (pid,)); conn.commit(); conn.close(); self.refresh_all()
 
     def on_delete_garden(self, gid):
-        conn = sqlite3.connect('flora.db'); conn.execute("DELETE FROM gardens WHERE id=?", (gid,)); conn.commit(); conn.close(); self.refresh_all()
+        conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM gardens WHERE id=?", (gid,)); conn.commit(); conn.close(); self.refresh_all()
 
     def on_delete_guide(self, gid):
-        conn = sqlite3.connect('flora.db'); conn.execute("DELETE FROM care_guides WHERE id=?", (gid,)); conn.commit(); conn.close(); self.refresh_guides()
+        conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM care_guides WHERE id=?", (gid,)); conn.commit(); conn.close(); self.refresh_guides()
 
     def on_sidebar_row_activated(self, _, row): self.stack.set_visible_child_name(row.target_id)
     def on_theme_toggle_clicked(self, btn):
@@ -184,6 +185,8 @@ if __name__ == "__main__":
         icon_theme = Gtk.IconTheme.get_for_display(display)
         icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "data/icons"))
         if os.path.exists(icon_path): icon_theme.add_search_path(icon_path)
-    app = Adw.Application(application_id='org.gnome.Flora')
+    app = Adw.Application(application_id='com.github.cadmiumcmyk.Flora')
     app.connect('activate', lambda a: FloraWindow(application=a).present())
     app.run(sys.argv)
+    
+    #https://github.com/cadmium-cmyk/flora
