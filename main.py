@@ -25,7 +25,23 @@ class FloraWindow(Adw.ApplicationWindow):
         self.create_dashboard(); self.create_tasks_ui(); self.create_gardens_ui(); self.create_library_ui(); self.create_guides_ui(); self.create_sidebar()
         self.journal_view = GlobalJournalView()
         self.stack.add_named(self.journal_view, "global_journal")
-        content_toolbar = Adw.ToolbarView(); content_toolbar.add_top_bar(Adw.HeaderBar()); content_toolbar.set_content(self.stack)
+        #content_toolbar = Adw.ToolbarView(); content_toolbar.add_top_bar(Adw.HeaderBar()); content_toolbar.set_content(self.stack)
+        
+        menu = Gio.Menu.new()
+        menu.append("About Flora", "win.about") # Connects to an action named 'about'
+    
+        # 2. Create the Menu Button
+        self.menu_button = Gtk.MenuButton(
+            icon_name="open-menu-symbolic",
+            menu_model=menu,
+            primary=True # This gives it the 'Primary Menu' styling in Libadwaita
+		)
+        self.setup_actions()
+        content_toolbar = Adw.ToolbarView()
+        header_bar = Adw.HeaderBar()
+        header_bar.pack_end(self.menu_button)
+        content_toolbar.add_top_bar(header_bar)
+        content_toolbar.set_content(self.stack)
         self.nav_view.push(Adw.NavigationPage.new(content_toolbar, "Flora"))
         self.split_view.set_content(Adw.NavigationPage.new(self.nav_view, "NavWrapper"))
         self.set_content(self.split_view); self.refresh_all()
@@ -177,18 +193,38 @@ class FloraWindow(Adw.ApplicationWindow):
         conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM care_guides WHERE id=?", (gid,)); conn.commit(); conn.close(); self.refresh_guides()
 
     def on_sidebar_row_activated(self, _, row): self.stack.set_visible_child_name(row.target_id)
+    
     def on_theme_toggle_clicked(self, btn):
         sm = Adw.StyleManager.get_default(); sm.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT if sm.get_dark() else Adw.ColorScheme.FORCE_DARK)
+        
+    def setup_actions(self):
+	    # This creates the logical 'trigger' for the menu item
+	    action = Gio.SimpleAction.new("about", None)
+	    action.connect("activate", self.on_about_clicked)
+	    self.add_action(action)
+	
+    def on_about_clicked(self, action, param):
+	    # The actual window that pops up
+	    about = Adw.AboutWindow(
+	        transient_for=self,
+	        application_name="Flora",
+	        version="v0.0.3-alpha",
+	        developer_name="Andrew Blair",
+	        license_type=Gtk.License.GPL_3_0,
+	    )
+	    about.present()
 
 if __name__ == "__main__":
     init_db()
     display = Gdk.Display.get_default()
     if display:
         icon_theme = Gtk.IconTheme.get_for_display(display)
-        icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "data/icons"))
+        icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "/data/icons"))
         if os.path.exists(icon_path): icon_theme.add_search_path(icon_path)
     app = Adw.Application(application_id='com.github.cadmiumcmyk.Flora')
     app.connect('activate', lambda a: FloraWindow(application=a).present())
     app.run(sys.argv)
+  
     
-    #https://github.com/cadmium-cmyk/flora
+
+#https://github.com/cadmium-cmyk/flora
