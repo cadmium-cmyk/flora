@@ -54,3 +54,16 @@ def calculate_age(date_str):
         if months < 12: return f"{months}m"
         return f"{months // 12}y"
     except: return "New"
+
+def get_all_journal_entries():
+    conn = sqlite3.connect(get_db_path()) # Ensure you're using the path helper we created earlier
+    query = """
+        SELECT j.id, j.entry_date, j.note, p.name, j.photo 
+        FROM journal_entries j 
+        JOIN plants p ON j.plant_id = p.id 
+        ORDER BY j.entry_date DESC
+    """
+    cursor = conn.execute(query)
+    entries = cursor.fetchall()
+    conn.close()
+    return entries

@@ -1,8 +1,13 @@
 import sqlite3
 import os
+import gi
+
+gi.require_version('Gtk', '4.0')
+gi.require_version('Adw', '1')
+
 from gi.repository import Gtk, Adw
 from ui_components import AddJournalDialog, EditJournalDialog
-from database import get_db_path
+from database import get_db_path, get_all_journal_entries
 
 class PlantDetailView(Adw.NavigationPage):
     def __init__(self, plant_id, plant_name):
@@ -40,3 +45,31 @@ class PlantDetailView(Adw.NavigationPage):
 
     def delete_entry(self, eid):
         conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM journal_entries WHERE id=?", (eid,)); conn.commit(); conn.close(); self.refresh()
+
+class GlobalJournalView(Adw.Bin):
+    def __init__(self):
+        super().__init__()
+        self.list_box = Gtk.ListBox(css_classes=["boxed-list"])
+        
+        pref_page = Adw.PreferencesPage()
+        group = Adw.PreferencesGroup(title="Garden History")
+        group.add(self.list_box)
+        pref_page.add(group)
+        
+        self.set_child(pref_page)
+
+    def refresh(self):
+        # Clear existing rows
+        while (c := self.list_box.get_first_child()):
+            self.list_box.remove(c)
+            
+        entries = get_all_journal_entries()
+        for eid, date, note, p_name, photo in entries:
+            row = Adw.ActionRow(title=note, subtitle=f"{p_name} — {date}")
+            
+            if photo and os.path.exists(photo):
+                img = Gtk.Image.new_from_file(photo)
+                img.set_pixel_size(40)
+                img.set_margin_end(12)
+                row.add_prefix(img)
+            self.list_box.append(row)

@@ -14,7 +14,7 @@ from ui_components import (
     apply_margins, AddTaskDialog, AddGuideDialog, 
     EditPlantDialog, AddPlantDialog, AddGardenDialog
 )
-from views import PlantDetailView
+from views import PlantDetailView, GlobalJournalView
 
 class FloraWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
@@ -23,6 +23,8 @@ class FloraWindow(Adw.ApplicationWindow):
         self.nav_view = Adw.NavigationView(); self.stack = Adw.ViewStack(); self.split_view = Adw.NavigationSplitView()
         self.filter_garden_ids, self.filter_model = [None], Gtk.StringList.new(["All Gardens"])
         self.create_dashboard(); self.create_tasks_ui(); self.create_gardens_ui(); self.create_library_ui(); self.create_guides_ui(); self.create_sidebar()
+        self.journal_view = GlobalJournalView()
+        self.stack.add_named(self.journal_view, "global_journal")
         content_toolbar = Adw.ToolbarView(); content_toolbar.add_top_bar(Adw.HeaderBar()); content_toolbar.set_content(self.stack)
         self.nav_view.push(Adw.NavigationPage.new(content_toolbar, "Flora"))
         self.split_view.set_content(Adw.NavigationPage.new(self.nav_view, "NavWrapper"))
@@ -30,7 +32,7 @@ class FloraWindow(Adw.ApplicationWindow):
 
     def create_sidebar(self):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL); self.sidebar_list = Gtk.ListBox(css_classes=["navigation-sidebar"])
-        items = [("dash", "Home", "user-home-symbolic"), ("tasks", "Tasks", "org.gnome.Calendar.Devel-symbolic"), ("gardens", "Gardens", "location-services-active-symbolic"), ("lib", "My Plants", "emoji-nature-symbolic"), ("guides", "Care Guides", "emblem-favorite-symbolic")]
+        items = [("dash", "Home", "user-home-symbolic"), ("tasks", "Tasks", "org.gnome.Calendar.Devel-symbolic"), ("gardens", "Gardens", "location-services-active-symbolic"), ("lib", "My Plants", "emoji-nature-symbolic"), ("global_journal", "Journal", "edit-paste-symbolic"), ("guides", "Care Guides", "emblem-favorite-symbolic")]
         for tid, label, icon in items:
             row = Adw.ActionRow(title=label, activatable=True); row.add_prefix(Gtk.Image.new_from_icon_name(icon)); row.target_id = tid; self.sidebar_list.append(row)
         self.sidebar_list.connect("row-activated", self.on_sidebar_row_activated)
@@ -77,7 +79,7 @@ class FloraWindow(Adw.ApplicationWindow):
         self.lib_stack = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
         pref = Adw.PreferencesPage(); self.filter_row = Adw.ComboRow(title="Filter Garden", model=self.filter_model); self.filter_row.connect("notify::selected", lambda *_: self.refresh_library())
         g1 = Adw.PreferencesGroup(); g1.add(self.filter_row); pref.add(g1)
-        self.lib_list = Gtk.ListBox(css_classes=["boxed-list"]); g2 = Adw.PreferencesGroup(title="Collection"); g2.add(self.lib_list); pref.add(g2); self.lib_stack.add_named(pref, "list")
+        self.lib_list = Gtk.ListBox(css_classes=["boxed-list"]); g2 = Adw.PreferencesGroup(title="Select a plant to add a journal entry"); g2.add(self.lib_list); pref.add(g2); self.lib_stack.add_named(pref, "list")
         self.lib_empty = Adw.StatusPage(title="No Plants Found", icon_name="emoji-nature-symbolic", description="Add your first plant to get started.")
         self.lib_stack.add_named(self.lib_empty, "empty"); page.append(self.lib_stack); self.stack.add_named(page, "lib")
 
@@ -90,7 +92,7 @@ class FloraWindow(Adw.ApplicationWindow):
         group = Adw.PreferencesGroup(title="Care Guides"); group.add(self.guides_list); pref.add(group); page.append(pref); self.stack.add_named(page, "guides")
 
     def refresh_all(self):
-        self.refresh_gardens(); self.refresh_library(); self.refresh_dashboard(); self.refresh_guides(); self.refresh_tasks()
+        self.refresh_gardens(); self.refresh_library(); self.refresh_dashboard(); self.refresh_guides(); self.refresh_tasks(); self.journal_view.refresh()
 
     def refresh_tasks(self):
         while (c := self.tasks_list.get_first_child()): self.tasks_list.remove(c)
