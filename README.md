@@ -17,4 +17,3 @@ A simple garden planner
 3. Code cleanup
 4. Calendar
 5. Reminders
-6. Icon
