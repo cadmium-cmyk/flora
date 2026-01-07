@@ -4,6 +4,8 @@ import sqlite3
 import gi
 from datetime import datetime
 from database import get_db_path
+import requests
+from threading import Thread
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -15,6 +17,110 @@ from ui_components import (
     EditPlantDialog, AddPlantDialog, AddGardenDialog
 )
 from views import PlantDetailView, GlobalJournalView
+
+class PerenualSearchDialog(Adw.Window):
+    def __init__(self, parent, callback):
+        super().__init__(transient_for=parent, modal=True)
+        self.set_default_size(400, 500)
+        self.set_title("Search Online Guides")
+        self.callback = callback
+        self.api_key = "sk-W61x695e11741408a14221" # Replace with your real key
+
+        # Main layout container
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        apply_margins(box, 12)
+        
+        # Search UI
+        self.search_entry = Gtk.SearchEntry(placeholder_text="Search common plant name...")
+        self.search_entry.connect("activate", self.on_search)
+        box.append(self.search_entry)
+
+        self.list_box = Gtk.ListBox(css_classes=["boxed-list"])
+        scrolled = Gtk.ScrolledWindow(vexpand=True, propagate_natural_height=True)
+        scrolled.set_child(self.list_box)
+        box.append(scrolled)
+
+        # CRITICAL FIX: Use set_content() instead of set_child() for Adw.Window
+        self.set_content(box)
+
+    def on_search(self, entry):
+        query = entry.get_text()
+        if not query: return
+        while (c := self.list_box.get_first_child()): self.list_box.remove(c)
+        Thread(target=self.fetch_results, args=(query,), daemon=True).start()
+
+    def fetch_results(self, query):
+        url = f"https://perenual.com/api/v2/species-list?key={self.api_key}&q={query}"
+        print(f"Searching: {url}") # DEBUG: See the exact URL being called
+        try:
+            r = requests.get(url, timeout=10)
+            print(f"Status Code: {r.status_code}") # DEBUG: Should be 200
+        
+            if r.status_code == 200:
+                data = r.json().get('data', [])
+                print(f"Results found: {len(data)}") # DEBUG: Are there items?
+                GObject.idle_add(self.update_ui, data)
+            else:
+                print(f"API Error Response: {r.text}")
+        except Exception as e:
+            print(f"Connection Error: {e}")
+
+    def update_ui(self, data):
+        """Processes API data and updates the ListBox on the main thread."""
+        # 1. Clear the list of old results
+        while (c := self.list_box.get_first_child()):
+            self.list_box.remove(c)
+            
+        # 2. Filter out results that don't have a common name
+        relevant_plants = [item for item in data if item.get('common_name')]
+
+        if not relevant_plants:
+            self.list_box.append(Adw.ActionRow(title="No matching plants found online."))
+            return
+
+        # 3. Process and display top results
+        for item in relevant_plants[:15]:
+            common_name = item.get('common_name').title()
+            scientific = item.get('scientific_name', [''])[0]
+            
+            # --- FIXED SUNLIGHT EXTRACTION ---
+            # Perenual returns a list: ["Full sun", "Part shade"]. We join them.
+            sun_data = item.get('sunlight')
+            if isinstance(sun_data, list) and sun_data:
+                sun_str = ", ".join(sun_data).capitalize()
+            elif isinstance(sun_data, str) and sun_data:
+                sun_str = sun_data.capitalize()
+            else:
+                sun_str = "Varies"
+
+            # --- WATERING EXTRACTION ---
+            water_text = item.get('watering', 'Average')
+            water_map = {"Frequent": 3, "Average": 7, "Minimum": 14}
+            water_interval = water_map.get(water_text, 7)
+
+            # 4. Create the Row
+            row = Adw.ActionRow(
+                title=common_name,
+                subtitle=f"{scientific} • Sun: {sun_str}"
+            )
+
+            # 5. Setup the Add Button with closure-safe variables
+            add_btn = Gtk.Button(icon_name="list-add-symbolic", css_classes=["flat"])
+            
+            # Use default arguments in lambda (n=..., s=..., i=...) to "freeze" the data for each row
+            add_btn.connect(
+                "clicked", 
+                lambda b, n=common_name, s=sun_str, i=water_interval: self.on_select(n, s, i)
+            )
+            
+            row.add_suffix(add_btn)
+            self.list_box.append(row)
+
+    def on_select(self, name, sun, interval):
+        """Finalizes selection and sends data back to FloraWindow via the callback."""
+        # This calls self.save_guide_from_api in main.py
+        self.callback(name, sun, interval)
+        self.destroy()
 
 class FloraWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
@@ -35,7 +141,7 @@ class FloraWindow(Adw.ApplicationWindow):
             icon_name="open-menu-symbolic",
             menu_model=menu,
             primary=True # This gives it the 'Primary Menu' styling in Libadwaita
-		)
+        )
         self.setup_actions()
         content_toolbar = Adw.ToolbarView()
         header_bar = Adw.HeaderBar()
@@ -115,12 +221,45 @@ class FloraWindow(Adw.ApplicationWindow):
         self.lib_stack.add_named(self.lib_empty, "empty"); page.append(self.lib_stack); self.stack.add_named(page, "lib")
 
     def create_guides_ui(self):
-        page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL); bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6); apply_margins(bar, 12)
-        self.guide_search = Gtk.SearchEntry(placeholder_text="Search guides...", hexpand=True); self.guide_search.connect("search-changed", lambda *_: self.refresh_guides())
-        add_btn = Gtk.Button(icon_name="list-add-symbolic", css_classes=["flat"]); add_btn.connect("clicked", lambda _: AddGuideDialog(self, self.refresh_guides).present())
-        bar.append(self.guide_search); bar.append(add_btn); page.append(bar)
-        pref = Adw.PreferencesPage(); self.guides_list = Gtk.ListBox(css_classes=["boxed-list"])
-        group = Adw.PreferencesGroup(title="Care Guides"); group.add(self.guides_list); pref.add(group); page.append(pref); self.stack.add_named(page, "guides")
+        page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        apply_margins(bar, 12)
+        
+        self.guide_search = Gtk.SearchEntry(placeholder_text="Search guides...", hexpand=True)
+        self.guide_search.connect("search-changed", lambda *_: self.refresh_guides())
+        
+        add_btn = Gtk.Button(icon_name="list-add-symbolic", css_classes=["flat"])
+        add_btn.connect("clicked", lambda _: AddGuideDialog(self, self.refresh_guides).present())
+        
+        # New Online Button
+        online_btn = Gtk.Button(label="Search Online", css_classes=["pill", "suggested-action"])
+        online_btn.connect("clicked", lambda _: PerenualSearchDialog(self, self.save_guide_from_api).present())
+        
+        # Add everything to the bar
+        bar.append(self.guide_search)
+        bar.append(online_btn)
+        bar.append(add_btn)
+        
+        page.append(bar)
+        
+        pref = Adw.PreferencesPage()
+        self.guides_list = Gtk.ListBox(css_classes=["boxed-list"])
+        group = Adw.PreferencesGroup(title="Care Guides")
+        group.add(self.guides_list)
+        pref.add(group)
+        page.append(pref)
+        self.stack.add_named(page, "guides")
+        
+    def save_guide_from_api(self, name, sun, interval):
+        conn = sqlite3.connect(get_db_path())
+        # Note: 'sunlight' and 'interval' columns must match your care_guides table schema
+        conn.execute(
+            "INSERT INTO care_guides (species, sunlight, interval) VALUES (?, ?, ?)", 
+            (name, sun, interval)
+        )
+        conn.commit()
+        conn.close()
+        self.refresh_guides() # Update the local guides list
 
     def refresh_all(self):
         self.refresh_gardens(); self.refresh_library(); self.refresh_dashboard(); self.refresh_guides(); self.refresh_tasks(); self.journal_view.refresh()

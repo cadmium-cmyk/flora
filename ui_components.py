@@ -193,3 +193,68 @@ class EditJournalDialog(Adw.Window):
         conn = sqlite3.connect(get_db_path())
         conn.execute("UPDATE journal_entries SET note=?, photo=? WHERE id=?", (self.note_entry.get_text(), self.photo_path, self.entry_id))
         conn.commit(); conn.close(); self.callback(); self.close()
+
+class PerenualSearchDialog(Adw.Window):
+    def __init__(self, parent, callback):
+        super().__init__(transient_for=parent, modal=True)
+        self.set_default_size(450, 500)
+        self.set_title("Search Online Guides")
+        self.callback = callback
+        self.api_key = "sk-W61x695e11741408a14221" # Get from perenual.com
+
+        view = Adw.ToolbarView()
+        header = Adw.HeaderBar()
+        view.add_top_bar(header)
+
+        # Search Box
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin_top=12, margin_bottom=12, margin_start=12, margin_end=12)
+        search_entry = Gtk.SearchEntry(placeholder_text="Search common plant name...")
+        search_entry.connect("activate", self.on_search)
+        vbox.append(search_entry)
+
+        # Results List
+        self.list_box = Gtk.ListBox(css_classes=["boxed-list"])
+        scrolled = Gtk.ScrolledWindow(propagate_natural_height=True, vexpand=True)
+        scrolled.set_child(self.list_box)
+        vbox.append(scrolled)
+
+        view.set_content(vbox)
+        self.set_content(view)
+
+    def on_search(self, entry):
+        query = entry.get_text()
+        if not query: return
+        # Clear list
+        while (c := self.list_box.get_first_child()): self.list_box.remove(c)
+        
+        # Run API call in a thread to keep UI responsive
+        Thread(target=self.fetch_results, args=(query,), daemon=True).start()
+
+    def fetch_results(self, query):
+        url = f"https://perenual.com/api/v2/species-list?key={self.api_key}&q={query}"
+        try:
+            r = requests.get(url, timeout=10)
+            if r.status_code == 200:
+                data = r.json().get('data', [])
+                # Schedule UI update on main thread
+                GObject.idle_add(self.update_ui, data)
+        except Exception as e:
+            print(f"API Error: {e}")
+
+    def update_ui(self, data):
+        for item in data:
+            row = Adw.ActionRow(title=item.get('common_name', 'Unknown'), subtitle=item.get('scientific_name', [''])[0])
+            add_btn = Gtk.Button(icon_name="list-add-symbolic", css_classes=["flat"])
+            row.add_suffix(add_btn)
+            add_btn.connect("clicked", lambda b, i=item: self.select_plant(i))
+            self.list_box.append(row)
+
+    def select_plant(self, item):
+        # Map Perenual data to our schema
+        sun = ", ".join(item.get('sunlight', []))
+        # Default interval logic based on watering string
+        water_map = {"Frequent": 3, "Average": 7, "Minimum": 14}
+        interval = water_map.get(item.get('watering'), 7)
+        
+        self.callback(item.get('common_name'), sun, interval)
+        self.destroy()

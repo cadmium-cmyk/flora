@@ -74,15 +74,73 @@ class PlantDetailView(Adw.NavigationPage):
                 # row.add_prefix(img)
             # self.list_box.append(row)
 
+# class GlobalJournalView(Adw.Bin):
+    # def __init__(self, main_stack):
+        # super().__init__()
+        # self.main_stack = main_stack
+        
+        # # Stack to switch between the list and the empty state
+        # self.stack = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
+        
+        # # 1. Setup the List View
+        # self.list_box = Gtk.ListBox(css_classes=["boxed-list"])
+        # pref_page = Adw.PreferencesPage()
+        # group = Adw.PreferencesGroup(title="Garden History")
+        # group.add(self.list_box)
+        # pref_page.add(group)
+        # self.stack.add_named(pref_page, "list")
+        
+        # # 2. Setup the Empty State
+        # self.empty_page = Adw.StatusPage(
+            # title="No History Yet",
+            # icon_name="view-list-bullet-symbolic",
+            # description="Your garden journal entries will appear here."
+        # )
+        
+        # # Call to Action: Jump to the 'lib' page defined in main.py
+        # action_btn = Gtk.Button(
+            # label="View My Plants",
+            # halign=Gtk.Align.CENTER,
+            # css_classes=["suggested-action", "pill"]
+        # )
+        # action_btn.connect("clicked", self.on_jump_to_plants)
+        
+        # self.empty_page.set_child(action_btn)
+        # self.stack.add_named(self.empty_page, "empty")
+        
+        # self.set_child(self.stack)
+
+    # def on_jump_to_plants(self, button):
+        # # Switches the main stack to the 'lib' page
+        # self.main_stack.set_visible_child_name("lib")
+
+    # def refresh(self):
+        # # Clear rows
+        # while (c := self.list_box.get_first_child()):
+            # self.list_box.remove(c)
+            
+        # entries = get_all_journal_entries()
+        # count = len(entries)
+        
+        # for eid, date, note, p_name, photo in entries:
+            # row = Adw.ActionRow(title=note, subtitle=f"{p_name} — {date}")
+            
+            # if photo and os.path.exists(photo):
+                # img = Gtk.Image.new_from_file(photo)
+                # img.set_pixel_size(40)
+                # img.set_margin_end(12)
+                # row.add_prefix(img)
+            # self.list_box.append(row)
+            
+        # # Switch visible child based on content
+        # self.stack.set_visible_child_name("list" if count > 0 else "empty")
 class GlobalJournalView(Adw.Bin):
     def __init__(self, main_stack):
         super().__init__()
         self.main_stack = main_stack
-        
-        # Stack to switch between the list and the empty state
         self.stack = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
         
-        # 1. Setup the List View
+        # List State
         self.list_box = Gtk.ListBox(css_classes=["boxed-list"])
         pref_page = Adw.PreferencesPage()
         group = Adw.PreferencesGroup(title="Garden History")
@@ -90,47 +148,23 @@ class GlobalJournalView(Adw.Bin):
         pref_page.add(group)
         self.stack.add_named(pref_page, "list")
         
-        # 2. Setup the Empty State
+        # Empty State
         self.empty_page = Adw.StatusPage(
-            title="No History Yet",
+            title="No History Yet", 
             icon_name="view-list-bullet-symbolic",
             description="Your garden journal entries will appear here."
         )
-        
-        # Call to Action: Jump to the 'lib' page defined in main.py
-        action_btn = Gtk.Button(
-            label="View My Plants",
-            halign=Gtk.Align.CENTER,
-            css_classes=["suggested-action", "pill"]
-        )
-        action_btn.connect("clicked", self.on_jump_to_plants)
-        
+        action_btn = Gtk.Button(label="View My Plants", halign=Gtk.Align.CENTER, css_classes=["suggested-action", "pill"])
+        action_btn.connect("clicked", lambda _: self.main_stack.set_visible_child_name("lib"))
         self.empty_page.set_child(action_btn)
         self.stack.add_named(self.empty_page, "empty")
         
         self.set_child(self.stack)
 
-    def on_jump_to_plants(self, button):
-        # Switches the main stack to the 'lib' page
-        self.main_stack.set_visible_child_name("lib")
-
     def refresh(self):
-        # Clear rows
-        while (c := self.list_box.get_first_child()):
-            self.list_box.remove(c)
-            
+        while (c := self.list_box.get_first_child()): self.list_box.remove(c)
         entries = get_all_journal_entries()
-        count = len(entries)
-        
         for eid, date, note, p_name, photo in entries:
             row = Adw.ActionRow(title=note, subtitle=f"{p_name} — {date}")
-            
-            if photo and os.path.exists(photo):
-                img = Gtk.Image.new_from_file(photo)
-                img.set_pixel_size(40)
-                img.set_margin_end(12)
-                row.add_prefix(img)
             self.list_box.append(row)
-            
-        # Switch visible child based on content
-        self.stack.set_visible_child_name("list" if count > 0 else "empty")
+        self.stack.set_visible_child_name("list" if len(entries) > 0 else "empty")
