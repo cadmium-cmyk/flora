@@ -23,3 +23,8 @@ A simple garden planner
 - Added all journal entries view
 - Added menu with about dialog
 - Icon tweaks
+
+### Building with Flatpak
+
+> flatpak-builder --force-clean --repo=repo build-dir com.github.cadmiumcmyk.Flora.json 
+> flatpak build-bundle repo flora-app.flatpak com.github.cadmiumcmyk.Flora
