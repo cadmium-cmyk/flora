@@ -9,7 +9,8 @@
   <description>
     <p>Flora helps you track plant growth and maintain a digital journal for your garden.</p>
   </description>
-  <launchable type="desktop-id">com.github.cadmiumcmyk.Flora</launchable>
+  <icon type="stock">com.github.cadmiumcmyk.Flora.png</icon>
+  <launchable type="desktop-id">com.github.cadmiumcmyk.Flora.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <caption>The main dashboard</caption>

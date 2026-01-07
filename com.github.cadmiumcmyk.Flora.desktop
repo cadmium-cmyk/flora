@@ -1,9 +1,10 @@
 [Desktop Entry]
 Name=Flora
-Comment=Manage your home garden and plants
+Comment=Digital companion for your home garden
 Exec=flora.sh
 Icon=com.github.cadmiumcmyk.Flora
 Terminal=false
 Type=Application
-Categories=Utility;GTK;
+# FIX: Added required semicolon at the end and a primary category
+Categories=Utility;GTK;GNOME;
 StartupNotify=true

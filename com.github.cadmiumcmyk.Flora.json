@@ -17,11 +17,16 @@
       "name": "flora",
       "buildsystem": "simple",
       "build-commands": [
-      "install -D main.py /app/bin/main.py",
-      "install -D database.py /app/bin/database.py",
-      "install -D ui_components.py /app/bin/ui_components.py",
-      "install -D views.py /app/bin/views.py",
-      "install -D flora.sh /app/bin/flora.sh"
+        "install -D -p main.py /app/bin/main.py",
+        "install -D -p database.py /app/bin/database.py",
+        "install -D -p ui_components.py /app/bin/ui_components.py",
+        "install -D -p views.py /app/bin/views.py",
+        "install -D -p flora.sh /app/bin/flora.sh",
+        "chmod +x /app/bin/flora.sh",
+        
+        "install -D -p com.github.cadmiumcmyk.Flora.desktop /app/share/applications/com.github.cadmiumcmyk.Flora.desktop",
+        "install -D -p com.github.cadmiumcmyk.Flora.png /app/share/icons/hicolor/128x128/apps/com.github.cadmiumcmyk.Flora.png",
+        "install -D -p com.github.cadmiumcmyk.Flora.metainfo.xml /app/share/metainfo/com.github.cadmiumcmyk.Flora.metainfo.xml"
       ],
       "sources": [
         {
