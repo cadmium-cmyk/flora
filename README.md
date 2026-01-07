@@ -10,10 +10,11 @@ A simple garden planner
 - Add plants
 - Add tasks
 - Watering reminders
+- Search Perenual for care templates
 
 ### To Do
-1. Search plants for care templates
-2. UI tweaks
-3. Code cleanup
+1. Fix sunlight requirements
+2. Weather integration
 4. Calendar
 5. Reminders
+6. Garden plotting
