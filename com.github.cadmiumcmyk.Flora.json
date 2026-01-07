@@ -25,7 +25,7 @@
         "chmod +x /app/bin/flora.sh",
         
         "install -D -p com.github.cadmiumcmyk.Flora.desktop /app/share/applications/com.github.cadmiumcmyk.Flora.desktop",
-        "install -D -p com.github.cadmiumcmyk.Flora.png /app/share/icons/hicolor/128x128/apps/com.github.cadmiumcmyk.Flora.png",
+        "install -D -p com.github.cadmiumcmyk.Flora.svg /app/share/icons/hicolor/128x128/apps/com.github.cadmiumcmyk.Flora.svg",
         "install -D -p com.github.cadmiumcmyk.Flora.metainfo.xml /app/share/metainfo/com.github.cadmiumcmyk.Flora.metainfo.xml"
       ],
       "sources": [

@@ -17,14 +17,3 @@ A simple garden planner
 3. Code cleanup
 4. Calendar
 5. Reminders
-
-### Changelog
-#### v0.0.3-alpha
-- Added all journal entries view
-- Added menu with about dialog
-- Icon tweaks
-
-### Building with Flatpak
-
-> flatpak-builder --force-clean --repo=repo build-dir com.github.cadmiumcmyk.Flora.json 
-> flatpak build-bundle repo flora-app.flatpak com.github.cadmiumcmyk.Flora

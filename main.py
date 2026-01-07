@@ -19,11 +19,11 @@ from views import PlantDetailView, GlobalJournalView
 class FloraWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.set_default_size(950, 700); self.set_title("Flora")
+        self.set_default_size(950, 700); self.set_title("Flora"); self.set_size_request(900, 650)
         self.nav_view = Adw.NavigationView(); self.stack = Adw.ViewStack(); self.split_view = Adw.NavigationSplitView()
         self.filter_garden_ids, self.filter_model = [None], Gtk.StringList.new(["All Gardens"])
         self.create_dashboard(); self.create_tasks_ui(); self.create_gardens_ui(); self.create_library_ui(); self.create_guides_ui(); self.create_sidebar()
-        self.journal_view = GlobalJournalView()
+        self.journal_view = GlobalJournalView(self.stack) # Pass the stack here
         self.stack.add_named(self.journal_view, "global_journal")
         #content_toolbar = Adw.ToolbarView(); content_toolbar.add_top_bar(Adw.HeaderBar()); content_toolbar.set_content(self.stack)
         
@@ -48,7 +48,22 @@ class FloraWindow(Adw.ApplicationWindow):
 
     def create_sidebar(self):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL); self.sidebar_list = Gtk.ListBox(css_classes=["navigation-sidebar"])
-        items = [("dash", "Home", "user-home-symbolic"), ("tasks", "Tasks", "org.gnome.Calendar.Devel-symbolic"), ("gardens", "Gardens", "location-services-active-symbolic"), ("lib", "My Plants", "emoji-nature-symbolic"), ("global_journal", "Journal", "edit-paste-symbolic"), ("guides", "Care Guides", "emblem-favorite-symbolic")]
+        
+        header_label = Gtk.Label(label="", xalign=0)
+        header_label.add_css_class("sidebar-header") # Custom class
+        header_label.set_margin_top(12)
+        header_label.set_margin_bottom(10)
+        header_label.set_margin_start(12)
+
+        self.sidebar_list.append(header_label)
+
+        # Make the wrapper row "invisible"
+        row = header_label.get_parent()
+        row.set_activatable(False)
+        row.set_selectable(False)
+        row.add_css_class("transparent-row")
+        
+        items = [("dash", "Home", "user-home-symbolic"), ("tasks", "Tasks", "org.gnome.Calendar.Devel-symbolic"), ("gardens", "Gardens", "location-services-active-symbolic"), ("lib", "My Plants", "emoji-nature-symbolic"), ("global_journal", "History", "edit-paste-symbolic"), ("guides", "Care Guides", "emblem-favorite-symbolic")]
         for tid, label, icon in items:
             row = Adw.ActionRow(title=label, activatable=True); row.add_prefix(Gtk.Image.new_from_icon_name(icon)); row.target_id = tid; self.sidebar_list.append(row)
         self.sidebar_list.connect("row-activated", self.on_sidebar_row_activated)
@@ -58,9 +73,9 @@ class FloraWindow(Adw.ApplicationWindow):
 
     def create_dashboard(self):
         page_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        status = Adw.StatusPage(title="Flora", icon_name="emoji-nature-symbolic", description="Ready to grow.")
+        status = Adw.StatusPage(title="Flora", icon_name="com.github.cadmiumcmyk.Flora", description="Ready to grow.")
         page_box.append(status)
-        pref_page = Adw.PreferencesPage(); self.thirsty_group = Adw.PreferencesGroup(title="Needs Water"); self.thirsty_list = Gtk.ListBox(css_classes=["boxed-list"])
+        pref_page = Adw.PreferencesPage(); self.thirsty_group = Adw.PreferencesGroup(title="Needs Water"); self.thirsty_list = Gtk.ListBox(css_classes=["boxed-list", "thirsty-list"])
         self.thirsty_group.add(self.thirsty_list); pref_page.add(self.thirsty_group); page_box.append(pref_page); self.stack.add_named(page_box, "dash")
 
     def create_tasks_ui(self):
@@ -192,7 +207,10 @@ class FloraWindow(Adw.ApplicationWindow):
     def on_delete_guide(self, gid):
         conn = sqlite3.connect(get_db_path()); conn.execute("DELETE FROM care_guides WHERE id=?", (gid,)); conn.commit(); conn.close(); self.refresh_guides()
 
-    def on_sidebar_row_activated(self, _, row): self.stack.set_visible_child_name(row.target_id)
+    def on_sidebar_row_activated(self, _, row): 
+        self.stack.set_visible_child_name(row.target_id)
+        if row.target_id == "global_journal":
+            self.journal_view.refresh()
     
     def on_theme_toggle_clicked(self, btn):
         sm = Adw.StyleManager.get_default(); sm.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT if sm.get_dark() else Adw.ColorScheme.FORCE_DARK)
@@ -207,15 +225,35 @@ class FloraWindow(Adw.ApplicationWindow):
 	    # The actual window that pops up
 	    about = Adw.AboutWindow(
 	        transient_for=self,
+	        application_icon="com.github.cadmiumcmyk.Flora",
 	        application_name="Flora",
 	        version="v0.0.3-alpha",
 	        developer_name="Andrew Blair",
+	        issue_url="https://github.com/cadmium-cmyk/flora/issues",
 	        license_type=Gtk.License.GPL_3_0,
 	    )
 	    about.present()
+	    
+def apply_style():
+    css_provider = Gtk.CssProvider()
+    try:
+        # Get path relative to main.py
+        css_path = os.path.join(os.path.dirname(__file__), "style.css")
+        css_provider.load_from_path(css_path)
+        
+        # Apply to the display
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            css_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
+        print("CSS applied successfully!")
+    except Exception as e:
+        print(f"Error loading CSS: {e}")
 
 if __name__ == "__main__":
     init_db()
+    apply_style() # Initialize your custom styles
     display = Gdk.Display.get_default()
     if display:
         icon_theme = Gtk.IconTheme.get_for_display(display)
@@ -224,6 +262,8 @@ if __name__ == "__main__":
     app = Adw.Application(application_id='com.github.cadmiumcmyk.Flora')
     app.connect('activate', lambda a: FloraWindow(application=a).present())
     app.run(sys.argv)
+    
+
   
     
 

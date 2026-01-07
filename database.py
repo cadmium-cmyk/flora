@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 def get_db_path():
-    data_dir = os.path.expanduser("~/.local/share/flora")
+    data_dir = os.path.expanduser("~/.var/app/com.github.cadmiumcmyk.Flora/data")
     # In a Flatpak, this usually maps to ~/.var/app/org.gnome.Flora/data
     if not os.path.exists(data_dir):
         os.makedirs(data_dir, exist_ok=True)
