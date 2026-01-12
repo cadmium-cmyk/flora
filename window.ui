@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.0"/>
+  
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label">System Theme</attribute>
+        <attribute name="action">app.set_theme</attribute>
+        <attribute name="target">default</attribute>
+      </item>
+      <item>
+        <attribute name="label">Light Style</attribute>
+        <attribute name="action">app.set_theme</attribute>
+        <attribute name="target">light</attribute>
+      </item>
+      <item>
+        <attribute name="label">Dark Style</attribute>
+        <attribute name="action">app.set_theme</attribute>
+        <attribute name="target">dark</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label">Online Search</attribute>
+        <attribute name="action">app.set_api_key</attribute>
+      </item>
+      <item>
+        <attribute name="label">Weather</attribute>
+        <attribute name="action">app.set_city</attribute>
+      </item>
+      <item>
+        <attribute name="label">About</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <template class="PlantWindow" parent="AdwApplicationWindow">
+    <property name="default-width">1000</property>
+    <property name="default-height">700</property>
+    <property name="title">Plant Explorer</property>
+    <child>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <property name="child">
+          <object class="AdwToolbarView">
+            <style>
+              <class name="main-content-area"/>
+            </style>
+            <property name="content">
+              <object class="GtkStack" id="main_stack">
+                <property name="transition-type">slide-left-right</property>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">orientation_page</property>
+                    <!-- Child will be added programmatically -->
+                    <property name="child">
+                      <object class="GtkBox"/>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">explorer_page</property>
+                    <property name="child">
+                      
+                      <object class="AdwOverlaySplitView" id="split_view">
+                        <property name="sidebar-position">start</property>
+                        
+                        <property name="sidebar">
+                          <object class="AdwToolbarView">
+                            <child type="top">
+                              <object class="AdwHeaderBar">
+                                <property name="show-end-title-buttons">False</property>
+                                <property name="title-widget">
+                                  <object class="AdwWindowTitle">
+                                    <property name="title">Flora</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <property name="content">
+                              <object class="GtkScrolledWindow">
+                                <child>
+                                  <object class="GtkListBox" id="sidebar_list">
+                                    <property name="selection-mode">single</property>
+                                    <property name="activate-on-single-click">True</property>
+                                    <style>
+                                      <class name="navigation-sidebar"/>
+                                    </style>
+                                    <property name="margin-top">12</property>
+                                    <property name="margin-bottom">12</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Dashboard</property>
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">user-home-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Search</property>
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">system-search-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">My Garden</property>
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">emoji-nature-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Reminders</property>
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">alarm-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Journal</property>
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">org.gnome.TextEditor-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Settings</property>
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">emblem-system-symbolic</property>
+                                      </object>
+                                    </child>
+
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </property>
+
+                        <property name="content">
+                          <object class="AdwViewStack" id="view_stack">
+                            
+                            <child>
+                              <object class="AdwViewStackPage">
+                                <property name="name">home_view</property>
+                                <property name="child">
+                                  <object class="AdwToolbarView">
+                                    <child type="top">
+                                      <object class="AdwHeaderBar">
+                                        <child type="start">
+                                          <object class="GtkButton" id="sidebar_btn_1">
+                                            <property name="icon-name">sidebar-show-symbolic</property>
+                                          </object>
+                                        </child>
+                                        <property name="title-widget">
+                                          <object class="AdwWindowTitle"><property name="title">Dashboard</property></object>
+                                        </property>
+                                        <child type="end">
+                                          <object class="GtkMenuButton">
+                                            <property name="icon-name">open-menu-symbolic</property>
+                                            <property name="menu-model">primary_menu</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    
+                                    <property name="content">
+                                      <object class="AdwPreferencesPage">
+                                          
+                                          <child>
+                                            <object class="AdwPreferencesGroup">
+                                              <child>
+                                                <object class="GtkBox">
+                                                  <property name="halign">center</property>
+                                                  <property name="margin-top">24</property>
+                                                  <property name="margin-bottom">12</property>
+                                                  <child>
+                                                    <object class="GtkImage">
+                                                      <property name="icon-name">leaf-symbolic</property>
+                                                      <property name="pixel-size">128</property>
+                                                      <style><class name="dim-label"/></style>
+                                                    </object>
+                                                  </child>
+                                                </object>
+                                              </child>
+                                            </object>
+                                          </child>
+                                      
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <property name="title">Overview</property>
+                                            
+                                            <child>
+                                              <object class="AdwActionRow" id="weather_row">
+                                                <property name="title">Local Weather</property>
+                                                <property name="subtitle">Loading weather...</property>
+                                                <child type="prefix">
+                                                  <object class="GtkImage" id="weather_icon">
+                                                    <property name="icon-name">weather-few-clouds-symbolic</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow" id="dashboard_status">
+                                                <property name="title">Garden Status</property>
+                                                <property name="subtitle">Checking plants...</property>
+                                                <child type="prefix">
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">emoji-nature-symbolic</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                        <child>
+                                          <object class="AdwPreferencesGroup" id="dashboard_reminders_group">
+                                            <property name="title">Upcoming Reminders</property>
+                                            <child>
+                                              <object class="GtkListBox" id="dashboard_reminders_list">
+                                                <property name="selection-mode">none</property>
+                                                <style><class name="boxed-list"/></style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                        <child>
+                                          <object class="AdwPreferencesGroup" id="dashboard_water_group">
+                                            <property name="title">Watering Priority</property>
+                                            <child>
+                                              <object class="GtkListBox" id="dashboard_water_list">
+                                                <property name="selection-mode">none</property>
+                                                <style><class name="boxed-list"/></style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                      </object>
+                                    </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="AdwViewStackPage">
+                                <property name="name">search_view</property>
+                                <property name="child">
+                                  <object class="AdwToolbarView">
+                                    <child type="top">
+                                      <object class="AdwHeaderBar">
+                                        <child type="start">
+                                          <object class="GtkButton" id="sidebar_btn_2">
+                                            <property name="icon-name">sidebar-show-symbolic</property>
+                                          </object>
+                                        </child>
+                                        <child type="end">
+                                          <object class="GtkMenuButton">
+                                            <property name="icon-name">open-menu-symbolic</property>
+                                            <property name="menu-model">primary_menu</property>
+                                          </object>
+                                        </child>
+                                        <property name="title-widget">
+                                          <object class="AdwWindowTitle">
+                                            <property name="title">Explore Plants</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                    <property name="content">
+                                      <object class="GtkBox">
+                                        <property name="orientation">vertical</property>
+                                        <property name="spacing">12</property>
+                                        <property name="margin-top">12</property>
+                                        
+                                        <child>
+                                          <object class="AdwClamp">
+                                            <property name="maximum-size">400</property>
+                                            <property name="tightening-threshold">300</property>
+                                            <child>
+                                              <object class="GtkSearchEntry" id="search_entry">
+                                                <property name="placeholder-text">Search species, family, or common name...</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                        <child>
+                                          <object class="GtkStack" id="search_stack">
+                                            <property name="vexpand">True</property>
+                                            <property name="transition-type">crossfade</property>
+
+                                            <child>
+                                              <object class="GtkStackPage">
+                                                <property name="name">empty_search</property>
+                                                <property name="child">
+                                                  <object class="AdwStatusPage">
+                                                    <property name="icon-name">system-search-symbolic</property>
+                                                    <property name="title">Find a New Plant</property>
+                                                    <property name="description">Enter a name above to search the global database.</property>
+                                                  </object>
+                                                </property>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="GtkStackPage">
+                                                <property name="name">loading</property>
+                                                <property name="child">
+                                                  <object class="GtkBox">
+                                                    <property name="orientation">vertical</property>
+                                                    <property name="valign">center</property>
+                                                    <property name="halign">center</property>
+                                                    <property name="spacing">12</property>
+                                                    <child>
+                                                      <object class="GtkSpinner" id="search_spinner">
+                                                        <property name="spinning">True</property>
+                                                        <property name="width-request">32</property>
+                                                        <property name="height-request">32</property>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkLabel">
+                                                        <property name="label">Searching database...</property>
+                                                        <style><class name="dim-label"/></style>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </property>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="GtkStackPage">
+                                                <property name="name">results</property>
+                                                <property name="child">
+                                                  <object class="GtkScrolledWindow">
+                                                    <child>
+                                                      <object class="AdwClamp">
+                                                        <property name="maximum-size">400</property>
+                                                        <child>
+                                                          <object class="GtkListBox" id="result_list">
+                                                            <property name="selection-mode">none</property>
+                                                            <style><class name="boxed-list"/></style>
+                                                          </object>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </property>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="AdwViewStackPage">
+                                <property name="name">fav_view</property>
+                                <property name="child">
+                                  <object class="AdwToolbarView">
+                                    <child type="top">
+                                      <object class="AdwHeaderBar">
+                                         <child type="start">
+                                          <object class="GtkButton" id="sidebar_btn_3">
+                                            <property name="icon-name">sidebar-show-symbolic</property>
+                                          </object>
+                                        </child>
+                                        <property name="title-widget">
+                                          <object class="AdwWindowTitle"><property name="title">My Garden</property></object>
+                                        </property>
+                                        <child type="end">
+                                          <object class="GtkMenuButton">
+                                            <property name="icon-name">open-menu-symbolic</property>
+                                            <property name="menu-model">primary_menu</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <property name="content">
+                                      <object class="AdwPreferencesPage">
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <property name="margin-top">24</property>
+                                                <property name="margin-bottom">12</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">sprout-symbolic</property>
+                                                    <property name="pixel-size">128</property>
+                                                    <style><class name="dim-label"/></style>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <property name="title">Add Plant</property>
+                                            <child>
+                                              <object class="AdwEntryRow" id="manual_name_entry">
+                                                <property name="title">Common Name</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwEntryRow" id="manual_science_entry">
+                                                <property name="title">Scientific Name</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow" id="manual_image_row">
+                                                <property name="title">Plant Photo</property>
+                                                <property name="subtitle">Select a image for you plant</property>
+                                                <child>
+                                                  <object class="GtkButton" id="select_image_button">
+                                                    <property name="valign">center</property>
+                                                    <property name="icon-name">list-add-symbolic</property>
+                                                    <style><class name="flat"/></style>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkButton" id="add_manual_button">
+                                                <property name="label">Add to Garden</property>
+                                                <property name="margin-top">12</property>
+                                                <style><class name="suggested-action"/><class name="pill"/></style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwPreferencesGroup" id="favorites_group">
+                                            <property name="title">My Collection</property>
+                                            <child>
+                                              <object class="GtkSearchEntry" id="garden_search_entry">
+                                                <property name="placeholder-text">Filter plants...</property>
+                                                <property name="margin-bottom">12</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkFlowBox" id="favorites_list">
+                                                <property name="valign">start</property>
+                                                <property name="max-children-per-line">4</property>
+                                                <property name="min-children-per-line">2</property>
+                                                <property name="selection-mode">none</property>
+                                                <property name="column-spacing">12</property>
+                                                <property name="row-spacing">12</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="AdwViewStackPage">
+                                <property name="name">reminders_view</property>
+                                <property name="child">
+                                  <object class="AdwToolbarView">
+                                    <child type="top">
+                                      <object class="AdwHeaderBar">
+                                         <child type="start">
+                                          <object class="GtkButton" id="sidebar_btn_4">
+                                            <property name="icon-name">sidebar-show-symbolic</property>
+                                          </object>
+                                        </child>
+                                        <property name="title-widget">
+                                          <object class="AdwWindowTitle"><property name="title">Task List</property></object>
+                                        </property>
+                                        <child type="end">
+                                          <object class="GtkMenuButton">
+                                            <property name="icon-name">open-menu-symbolic</property>
+                                            <property name="menu-model">primary_menu</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <property name="content">
+                                      <object class="AdwPreferencesPage">
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <property name="margin-top">24</property>
+                                                <property name="margin-bottom">12</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">alarm-symbolic</property>
+                                                    <property name="pixel-size">128</property>
+                                                    <style><class name="dim-label"/></style>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <property name="title">New Reminder</property>
+                                            <child><object class="AdwEntryRow" id="reminder_entry"><property name="title">Task</property></object></child>
+                                            <child>
+                                              <object class="AdwEntryRow" id="reminder_date_entry">
+                                                <property name="title">Due Date (YYYY-MM-DD)</property>
+                                                <child type="suffix">
+                                                  <object class="GtkButton" id="calendar_button">
+                                                    <property name="valign">center</property>
+                                                    <property name="icon-name">calendar-symbolic</property>
+                                                    <style>
+                                                      <class name="flat"/>
+                                                    </style>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkButton" id="add_reminder_button">
+                                                <property name="label">Add Task</property>
+                                                <property name="margin-top">12</property>
+                                                <style><class name="suggested-action"/><class name="pill"/></style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <property name="title">Upcoming</property>
+                                            <child>
+                                              <object class="GtkStack" id="reminder_stack">
+                                                <child>
+                                                  <object class="GtkStackPage">
+                                                    <property name="name">empty</property>
+                                                    <property name="child">
+                                                      <object class="AdwStatusPage">
+                                                        <property name="title">You're all caught up!</property>
+                                                      </object>
+                                                    </property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkStackPage">
+                                                    <property name="name">list</property>
+                                                    <property name="child">
+                                                      <object class="GtkListBox" id="reminder_list">
+                                                        <style><class name="boxed-list"/></style>
+                                                      </object>
+                                                    </property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="AdwViewStackPage">
+                                <property name="name">journal_view</property>
+                                <property name="child">
+                                  <object class="AdwToolbarView">
+                                    <child type="top">
+                                      <object class="AdwHeaderBar">
+                                         <child type="start">
+                                          <object class="GtkButton" id="sidebar_btn_5">
+                                            <property name="icon-name">sidebar-show-symbolic</property>
+                                          </object>
+                                        </child>
+                                        <property name="title-widget">
+                                          <object class="AdwWindowTitle"><property name="title">Journal</property></object>
+                                        </property>
+                                        <child type="end">
+                                          <object class="GtkMenuButton">
+                                            <property name="icon-name">open-menu-symbolic</property>
+                                            <property name="menu-model">primary_menu</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <property name="content">
+                                      <object class="AdwPreferencesPage">
+
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            
+                                          </object>
+                                        </child>
+                                            
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="halign">center</property>
+                                                <property name="margin-top">24</property>
+                                                <property name="margin-bottom">12</property>
+                                                <child>
+                                                  <object class="GtkImage">
+                                                    <property name="icon-name">open-book-symbolic</property>
+                                                    <property name="pixel-size">128</property>
+                                                    <style><class name="dim-label"/></style>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkButton" id="journal_new_btn">
+                                                <property name="label">New Entry</property>
+                                                <property name="margin-top">12</property>
+                                                <property name="halign">center</property>
+                                                <style><class name="suggested-action"/><class name="pill"/></style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                            
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <child>
+                                              <object class="GtkStack" id="journal_stack">
+                                                <child>
+                                                  <object class="GtkStackPage">
+                                                    <property name="name">empty</property>
+                                                    <property name="child">
+                                                      <object class="AdwStatusPage">
+                                                        <property name="title">No journal entries yet</property>
+                                                      </object>
+                                                    </property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkStackPage">
+                                                    <property name="name">list</property>
+                                                    <property name="child">
+                                                      <object class="GtkListBox" id="journal_list">
+                                                        <style><class name="boxed-list"/></style>
+                                                      </object>
+                                                    </property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="AdwViewStackPage">
+                                <property name="name">settings_view</property>
+                                <property name="child">
+                                  <object class="AdwToolbarView">
+                                    <child type="top">
+                                      <object class="AdwHeaderBar">
+                                         <child type="start">
+                                          <object class="GtkButton" id="sidebar_btn_6">
+                                            <property name="icon-name">sidebar-show-symbolic</property>
+                                          </object>
+                                        </child>
+                                        <property name="title-widget">
+                                          <object class="AdwWindowTitle"><property name="title">Settings</property></object>
+                                        </property>
+                                        <child type="end">
+                                          <object class="GtkMenuButton">
+                                            <property name="icon-name">open-menu-symbolic</property>
+                                            <property name="menu-model">primary_menu</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <property name="content">
+                                      <object class="AdwPreferencesPage">
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <property name="title">General</property>
+                                            <child>
+                                              <object class="AdwComboRow" id="api_provider_row">
+                                                <property name="title">API Provider</property>
+                                                <property name="model">
+                                                  <object class="GtkStringList">
+                                                    <items>
+                                                      <item>Trefle</item>
+                                                      <item>Perenual</item>
+                                                    </items>
+                                                  </object>
+                                                </property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwPreferencesGroup">
+                                            <property name="title">General</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">About</property>
+                                                <property name="subtitle">Version 0.0.1-beta</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+
+                          </object>
+                        </property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">details_page</property>
+                    <property name="child">
+                      <object class="AdwToolbarView">
+                        <child type="top">
+                          <object class="AdwHeaderBar">
+                            <child type="start">
+                              <object class="GtkButton" id="back_button">
+                                <property name="icon-name">go-previous-symbolic</property>
+                              </object>
+                            </child>
+                            <child type="end">
+                              <object class="GtkButton" id="fav_button">
+                                <property name="icon-name">bookmark-new-symbolic</property>
+                              </object>
+                            </child>
+                            <child type="end">
+                              <object class="GtkButton" id="delete_button">
+                                <property name="icon-name">user-trash-symbolic</property>
+                                <style><class name="destructive-action"/></style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <property name="content">
+                          <object class="AdwPreferencesPage">
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkOverlay">
+                                        <child>
+                                          <object class="AdwAvatar" id="detail_image">
+                                            <property name="size">200</property>
+                                            <property name="show-initials">True</property>
+                                          </object>
+                                        </child>
+                                        
+                                        <child type="overlay">
+                                          <object class="GtkSpinner" id="image_spinner">
+                                            <property name="halign">center</property>
+                                            <property name="valign">center</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="change_photo_button">
+                                        <property name="label">Change Photo</property>
+                                        <property name="icon-name">camera-photo-symbolic</property>
+                                        <property name="margin-top">12</property>
+                                        <property name="halign">center</property>
+                                        <style><class name="pill"/></style>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title">Garden Timeline</property>
+                                <child><object class="AdwActionRow" id="detail_date"><property name="title">Date Added</property></object></child>
+                                <child><object class="AdwActionRow" id="detail_counter"><property name="title">Days Owned</property></object></child>
+                                <child>
+                                  <object class="AdwActionRow" id="detail_watered_row">
+                                    <property name="title">Watering Log</property>
+                                    <child>
+                                      <object class="GtkButton" id="water_button">
+                                        <property name="icon-name">rain-symbolic</property>
+                                        <style><class name="circular"/></style>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title">Care Settings</property>
+                                <child><object class="AdwEntryRow" id="detail_habit"><property name="title">Growth Habit</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_harvest"><property name="title">Days to Harvest</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_light"><property name="title">Light Requirement</property></object></child>
+                                
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title">Botanical Reference</property>
+                                <child><object class="AdwEntryRow" id="detail_name"><property name="title">Common Name</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_genus"><property name="title">Genus</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_family"><property name="title">Family</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_scientific"><property name="title">Scientific Name</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_year"><property name="title">Year Discovered</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_bib"><property name="title">Bibliography</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_edible"><property name="title">Edible</property></object></child>
+                                <child><object class="AdwEntryRow" id="detail_vegetable"><property name="title">Vegetable</property></object></child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="title">Personal Notes</property>
+                                <child>
+                                  <object class="GtkScrolledWindow">
+                                    <property name="min-content-height">100</property>
+                                    <child>
+                                      <object class="GtkTextView" id="detail_notes">
+                                        <property name="wrap-mode">word</property>
+                                        <property name="height-request">200</property>
+                                        <style><class name="card"/></style>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="save_edits_button">
+                                    <property name="label">Save Changes</property>
+                                    <style><class name="suggested-action"/><class name="pill"/></style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

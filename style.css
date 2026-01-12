@@ -1,0 +1,36 @@
+statuspage .title {
+    font-size: 24pt;
+    font-weight: 800;
+    color: @accent_color;
+}
+
+.boxed-list {
+    background-color: @card_bg_color;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.suggested-action {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+    font-weight: bold;
+}
+
+textview {
+    background-color: @view_bg_color;
+    padding: 12px;
+    border-radius: 8px;
+    
+}
+
+row.expander {
+    margin: 4px 0;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+statuspage image {
+    -gtk-icon-size: 256px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    margin-bottom: 20px;
+}

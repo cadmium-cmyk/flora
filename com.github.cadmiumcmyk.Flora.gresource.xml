@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/cadmiumcmyk/Flora">
+    <file preprocess="xml-stripblanks">window.ui</file>
+    <file>style.css</file>
+    <file>resources/com.github.cadmiumcmyk.Flora.svg</file>
+    <file>resources/flora-flowers.svg</file>
+    <file>resources/flower.svg</file>
+    <file>resources/leaf-symbolic.svg</file>
+    <file>resources/rain-symbolic.svg</file>
+    <file>resources/sprout-symbolic.svg</file>
+    <file>resources/today-alt2-symbolic.svg</file>
+    <file>resources/open-book-symbolic.svg</file>
+  </gresource>
+</gresources>

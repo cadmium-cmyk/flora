@@ -1,0 +1,53 @@
+{
+  "app-id": "com.github.cadmiumcmyk.Flora",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "49",
+  "sdk": "org.gnome.Sdk",
+  "command": "flora.sh",
+  "finish-args": [
+    "--share=network",
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--filesystem=xdg-data",
+    "--talk-name=org.freedesktop.Notifications"
+    
+  ],
+  "modules": [
+      "python3-requests.json",
+    {
+      "name": "flora",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -D -p main.py /app/bin/main.py",
+        "install -D -p window.py /app/bin/window.py",
+        "install -D -p database.py /app/bin/database.py",
+        "mkdir -p /app/bin/ui/views",
+        "install -D -p ui/__init__.py /app/bin/ui/__init__.py",
+        "install -D -p ui/views/__init__.py /app/bin/ui/views/__init__.py",
+        "install -D -p ui/views/dashboard.py /app/bin/ui/views/dashboard.py",
+        "install -D -p ui/views/search.py /app/bin/ui/views/search.py",
+        "install -D -p ui/views/details.py /app/bin/ui/views/details.py",
+        "install -D -p ui/views/garden.py /app/bin/ui/views/garden.py",
+        "install -D -p ui/views/journal.py /app/bin/ui/views/journal.py",
+        "install -D -p ui/views/reminders.py /app/bin/ui/views/reminders.py",
+        "install -D -p ui/views/orientation.py /app/bin/ui/views/orientation.py",
+        "glib-compile-resources --target=com.github.cadmiumcmyk.Flora.gresource com.github.cadmiumcmyk.Flora.gresource.xml",
+        "install -D -p com.github.cadmiumcmyk.Flora.gresource /app/share/flora/com.github.cadmiumcmyk.Flora.gresource",
+        "install -D -p flora.sh /app/bin/flora.sh",
+        "chmod +x /app/bin/flora.sh",
+        
+        "install -D -p com.github.cadmiumcmyk.Flora.desktop /app/share/applications/com.github.cadmiumcmyk.Flora.desktop",
+        "install -D -p resources/com.github.cadmiumcmyk.Flora.svg /app/share/icons/hicolor/128x128/apps/com.github.cadmiumcmyk.Flora.svg",
+        "install -D -p com.github.cadmiumcmyk.Flora.metainfo.xml /app/share/metainfo/com.github.cadmiumcmyk.Flora.metainfo.xml"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "."
+        }
+      ]
+    }
+  ]
+}
