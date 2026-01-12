@@ -110,8 +110,8 @@ class App(Adw.Application):
             application_icon="com.github.cadmiumcmyk.Flora",
             developer_name="Andrew Bair",
             version="v0.0.5-beta",
-            copyright="© 2026 Andrew",
-            website="https://trefle.io"
+            copyright="© 2026 Andrew Blair",
+            website="https://github.com/cadmium-cmyk/flora"
         )
         about.present()
 
