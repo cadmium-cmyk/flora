@@ -14,8 +14,11 @@ from ui.views import (
     PlantDetailView,
     GardenView,
     JournalView,
-    RemindersView
+    RemindersView,
+    CollectionsView
 )
+from ui.views.collections import CollectionEditorView
+from ui.views.journal_editor import JournalEditorView
 from ui.views.orientation import OrientationPage
 
 # UI_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "window.ui")
@@ -33,6 +36,7 @@ class PlantWindow(Adw.ApplicationWindow):
     # Navigation Sidebar
     split_view = Gtk.Template.Child()
     sidebar_list = Gtk.Template.Child()
+    sidebar_close_btn = Gtk.Template.Child()
     
     # Toggle buttons (Sidebar toggle)
     sidebar_btn_1 = Gtk.Template.Child()
@@ -41,6 +45,7 @@ class PlantWindow(Adw.ApplicationWindow):
     sidebar_btn_4 = Gtk.Template.Child()
     sidebar_btn_5 = Gtk.Template.Child()
     sidebar_btn_6 = Gtk.Template.Child()
+    sidebar_btn_7 = Gtk.Template.Child()
 
     # We declare these here so the 'builder' (self) has references to them 
     # to pass to the View classes.
@@ -53,13 +58,11 @@ class PlantWindow(Adw.ApplicationWindow):
     
     # Favorites (Garden)
     garden_search_entry = Gtk.Template.Child()
+    garden_stack = Gtk.Template.Child()
     favorites_list = Gtk.Template.Child()
     favorites_group = Gtk.Template.Child()
-    manual_name_entry = Gtk.Template.Child()
-    manual_science_entry = Gtk.Template.Child()
-    manual_image_row = Gtk.Template.Child()
-    select_image_button = Gtk.Template.Child()
-    add_manual_button = Gtk.Template.Child()
+    garden_add_btn = Gtk.Template.Child()
+    garden_empty_add_btn = Gtk.Template.Child()
 
     # Details
     detail_image = Gtk.Template.Child()
@@ -78,27 +81,57 @@ class PlantWindow(Adw.ApplicationWindow):
     detail_date = Gtk.Template.Child()
     detail_counter = Gtk.Template.Child()
     detail_watered_row = Gtk.Template.Child()
-    save_edits_button = Gtk.Template.Child()
+    detail_save_btn = Gtk.Template.Child()
+    detail_assign_dropdown = Gtk.Template.Child()
     water_button = Gtk.Template.Child()
     fav_button = Gtk.Template.Child()
     delete_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
     image_spinner = Gtk.Template.Child()
-    change_photo_button = Gtk.Template.Child()
 
     # Reminders
     reminder_stack = Gtk.Template.Child()
     reminder_list = Gtk.Template.Child()
-    reminder_entry = Gtk.Template.Child()
-    reminder_date_entry = Gtk.Template.Child()
-    add_reminder_button = Gtk.Template.Child()
-    calendar_button = Gtk.Template.Child()
+    daily_reminder_stack = Gtk.Template.Child()
+    daily_reminder_list = Gtk.Template.Child()
+    reminders_calendar = Gtk.Template.Child()
+    reminders_add_btn = Gtk.Template.Child()
+    reminders_export_btn = Gtk.Template.Child()
+    reminders_import_btn = Gtk.Template.Child()
     
     # Journal
     journal_stack = Gtk.Template.Child()
     journal_list = Gtk.Template.Child()
     journal_new_btn = Gtk.Template.Child()
+    journal_empty_add_btn = Gtk.Template.Child()
     
+    # Journal Editor
+    editor_back_btn = Gtk.Template.Child()
+    editor_save_btn = Gtk.Template.Child()
+    editor_title_entry = Gtk.Template.Child()
+    editor_text_view = Gtk.Template.Child()
+    editor_bold_btn = Gtk.Template.Child()
+    editor_italic_btn = Gtk.Template.Child()
+    editor_underline_btn = Gtk.Template.Child()
+    editor_bullet_btn = Gtk.Template.Child()
+    editor_align_left_btn = Gtk.Template.Child()
+    editor_align_right_btn = Gtk.Template.Child()
+    editor_align_center_btn = Gtk.Template.Child()
+    editor_align_fill_btn = Gtk.Template.Child()
+
+    # Layouts
+    layouts_stack = Gtk.Template.Child()
+    layouts_list = Gtk.Template.Child()
+    layouts_add_btn = Gtk.Template.Child()
+    layouts_empty_add_btn = Gtk.Template.Child()
+    
+    # Layout Editor
+    layout_editor_back_btn = Gtk.Template.Child()
+    layout_editor_title = Gtk.Template.Child()
+    layout_editor_edit_btn = Gtk.Template.Child()
+    layout_editor_add_btn = Gtk.Template.Child()
+    layout_flowbox = Gtk.Template.Child()
+
     # Dashboard
     dashboard_status = Gtk.Template.Child()
     dashboard_reminders_group = Gtk.Template.Child()
@@ -110,6 +143,10 @@ class PlantWindow(Adw.ApplicationWindow):
 
     # Settings
     api_provider_row = Gtk.Template.Child()
+    settings_api_key_entry = Gtk.Template.Child()
+    settings_city_entry = Gtk.Template.Child()
+    settings_api_save_btn = Gtk.Template.Child()
+    settings_city_save_btn = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -152,9 +189,27 @@ class PlantWindow(Adw.ApplicationWindow):
             builder=self
         )
         
+        self.journal_editor_view = JournalEditorView(
+            window=self,
+            db=self.db,
+            builder=self
+        )
+
         self.reminders_view = RemindersView(
             window=self, 
             db=self.db, 
+            builder=self
+        )
+        
+        self.collections_view = CollectionsView(
+            window=self,
+            db=self.db,
+            builder=self
+        )
+        
+        self.collection_editor_view = CollectionEditorView(
+            window=self,
+            db=self.db,
             builder=self
         )
 
@@ -193,7 +248,8 @@ class PlantWindow(Adw.ApplicationWindow):
 
     def setup_settings(self):
         # Set initial value for API provider combo row
-        provider = self.get_application().config.get("api_provider", "trefle")
+        config = self.get_application().config
+        provider = config.get("api_provider", "trefle")
         if provider == "perenual":
             self.api_provider_row.set_selected(1)
         else:
@@ -201,11 +257,35 @@ class PlantWindow(Adw.ApplicationWindow):
             
         self.api_provider_row.connect("notify::selected", self.on_api_provider_changed)
 
+        # API Key
+        self.settings_api_key_entry.set_text(config.get("api_key", ""))
+
+        # Weather Location
+        self.settings_city_entry.set_text(config.get("city", ""))
+        
+        # Save Buttons
+        self.settings_api_save_btn.connect("clicked", self.on_save_api_key)
+        self.settings_city_save_btn.connect("clicked", self.on_save_city)
+
     def on_api_provider_changed(self, row, pspec):
         index = row.get_selected()
         provider = "trefle" if index == 0 else "perenual"
         self.get_application().config["api_provider"] = provider
         self.get_application().save_config()
+
+    def on_save_api_key(self, btn):
+        key = self.settings_api_key_entry.get_text().strip()
+        self.get_application().config["api_key"] = key
+        self.get_application().save_config()
+        self.show_toast("API Key Saved")
+
+    def on_save_city(self, btn):
+        city = self.settings_city_entry.get_text().strip()
+        self.get_application().config["city"] = city
+        self.get_application().save_config()
+        self.show_toast("Location Saved")
+        # Trigger weather update if needed
+        self.dashboard_view.refresh()
 
     def setup_css(self):
         css_provider = Gtk.CssProvider()
@@ -236,14 +316,46 @@ class PlantWindow(Adw.ApplicationWindow):
         
         # Sidebar Toggles
         for btn in [self.sidebar_btn_1, self.sidebar_btn_2, self.sidebar_btn_3, 
-                   self.sidebar_btn_4, self.sidebar_btn_5, self.sidebar_btn_6]:
+                   self.sidebar_btn_4, self.sidebar_btn_5, self.sidebar_btn_6, self.sidebar_btn_7]:
             btn.connect("clicked", self.on_sidebar_toggle_clicked)
+        
+        # Sidebar Close Button
+        self.sidebar_close_btn.connect("clicked", self.on_sidebar_close_clicked)
+        self.split_view.connect("notify::collapsed", self.update_sidebar_close_btn)
+        self.split_view.connect("notify::pin-sidebar", self.update_sidebar_close_btn)
+        self.update_sidebar_close_btn(self.split_view, None)
+
+    def on_sidebar_close_clicked(self, btn):
+        self.split_view.set_show_sidebar(False)
+
+    def update_sidebar_close_btn(self, split_view, pspec):
+        collapsed = split_view.get_collapsed()
+        pinned = split_view.get_pin_sidebar()
+        self.sidebar_close_btn.set_visible(collapsed and not pinned)
 
     def on_plant_selected(self, plant_data):
         """
         Callback used by Search and Garden views to navigate to details.
         """
         self.detail_view.load_plant(plant_data)
+
+    def open_journal_editor(self, entry_id=None, title="", content=""):
+        self.journal_editor_view.open_entry(entry_id, title, content)
+        self.main_stack.set_visible_child_name("journal_editor_page")
+
+    def close_journal_editor(self, saved=False):
+        self.main_stack.set_visible_child_name("explorer_page")
+        if saved:
+            self.journal_view.refresh()
+
+    def open_layout_editor(self, l_id, name, l_type):
+        self.collection_editor_view.load_layout(l_id, name, l_type)
+        self.main_stack.set_visible_child_name("layout_editor_page")
+
+    def close_layout_editor(self, refresh=False):
+        self.main_stack.set_visible_child_name("explorer_page")
+        if refresh:
+            self.collections_view.refresh()
 
     def on_sidebar_toggle_clicked(self, btn):
         is_visible = self.split_view.get_show_sidebar()
@@ -255,11 +367,12 @@ class PlantWindow(Adw.ApplicationWindow):
         
         page_map = {
             "Dashboard": "home_view",
-            "Search": "search_view",
-            "My Garden": "fav_view",
+            "Plant Search": "search_view",
+            "My Plants": "fav_view",
             "Reminders": "reminders_view",
             "Journal": "journal_view",
-            "Settings": "settings_view"
+            "Settings": "settings_view",
+            "My Gardens": "layouts_view"
         }
         
         target_page = page_map.get(title)
@@ -286,6 +399,8 @@ class PlantWindow(Adw.ApplicationWindow):
             self.reminders_view.refresh()
         elif target == "journal_view":
             self.journal_view.refresh()
+        elif target == "layouts_view":
+            self.collections_view.refresh()
 
     def show_toast(self, message):
         """Helper to show toasts from sub-views"""

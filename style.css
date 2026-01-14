@@ -7,7 +7,24 @@ statuspage .title {
 .boxed-list {
     background-color: @card_bg_color;
     border-radius: 12px;
+    padding: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .boxed-list {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-mode .boxed-list {
+    background-color: #383838;
+    color: #ffffff;
+}
+
+.task-boxed-list {
+    background-color: @window_bg_color;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .suggested-action {
@@ -17,20 +34,41 @@ statuspage .title {
 }
 
 textview {
-    background-color: @view_bg_color;
+    margin: 6px 12px;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 12px;
+    background-color: @card_bg_color;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     
 }
 
-row.expander {
-    margin: 4px 0;
-    border-radius: 8px;
-    border: 1px solid transparent;
+.editor-title-entry {
+    margin: 6px 12px;
+    border-radius: 12px;
+    background-color: @card_bg_color;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-statuspage image {
-    -gtk-icon-size: 256px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-    margin-bottom: 20px;
+.plant-detail-image {
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.plant-card-image {
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+calendar.rounded-calendar {
+    border-radius: 12px;
+    background-color: @card_bg_color;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 6px;
+    border: none;
+}
+
+preferencesgroup > box > label {
+
 }

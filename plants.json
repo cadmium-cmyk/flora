@@ -1,0 +1,1881 @@
+{
+  "data": [
+  {
+    "id": 143120,
+    "common_name": "Common sunflower",
+    "slug": "helianthus-annuus",
+    "scientific_name": "Helianthus annuus",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 904 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Aster family",
+    "genus_id": 3528,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg",
+    "synonyms": [
+      "Helianthus lenticularis",
+      "Helianthus aridus"
+    ],
+    "genus": "Helianthus",
+    "family": "Asteraceae",
+    "links": {
+      "self": "/api/v1/plants/helianthus-annuus",
+      "plant": "/api/v1/plants/helianthus-annuus",
+      "genus": "/api/v1/genus/helianthus"
+    },
+    "edible": "Yes",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": 108,
+    "light": "Full Sun"
+  },
+  {
+    "id": 113883,
+    "common_name": "Sweet basil",
+    "slug": "ocimum-basilicum",
+    "scientific_name": "Ocimum basilicum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 597 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mint family",
+    "genus_id": 4833,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Basil-Basilico-Ocimum_basilicum-albahaca.jpg",
+    "synonyms": [
+      "Ocimum majus",
+      "Ocimum album"
+    ],
+    "genus": "Ocimum",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/ocimum-basilicum",
+      "plant": "/api/v1/plants/ocimum-basilicum",
+      "genus": "/api/v1/genus/ocimum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 43,
+    "light": "Full Sun"
+  },
+  {
+    "id": 263301,
+    "common_name": "Swiss cheese plant",
+    "slug": "monstera-deliciosa",
+    "scientific_name": "Monstera deliciosa",
+    "year": 1849,
+    "bibliography": "Vidensk. Meddel. Naturhist. Foren. Kjøbenhavn 1849: 19 (1849)",
+    "author": "Liebm.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 8573,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Monstera_deliciosa3.jpg",
+    "synonyms": [
+      "Philodendron anatomicum",
+      "Tornelia fragrans"
+    ],
+    "genus": "Monstera",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/monstera-deliciosa",
+      "plant": "/api/v1/plants/monstera-deliciosa",
+      "genus": "/api/v1/genus/monstera"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Vine",
+    "days_to_harvest": null,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 167888,
+    "common_name": "Garden strawberry",
+    "slug": "fragaria-x-ananassa",
+    "scientific_name": "Fragaria x ananassa",
+    "year": 1766,
+    "bibliography": "Hist. Nat. Fraisiers: 190 (1766)",
+    "author": "(Duchesne) Guédès",
+    "status": "accepted",
+    "rank": "hybrid",
+    "family_common_name": "Rose family",
+    "genus_id": 2981,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
+    "synonyms": [
+      "Fragaria ananassa"
+    ],
+    "genus": "Fragaria",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/fragaria-x-ananassa",
+      "plant": "/api/v1/plants/fragaria-x-ananassa",
+      "genus": "/api/v1/genus/fragaria"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 105,
+    "light": "Full Sun"
+  },
+  {
+    "id": 128892,
+    "common_name": "Golden pothos",
+    "slug": "epipremnum-aureum",
+    "scientific_name": "Epipremnum aureum",
+    "year": 1964,
+    "bibliography": "Birdsey, G.S. (1964) Baileya 10: 155.",
+    "author": "(Linden & André) G.S.Bunting",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 2662,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Epipremnum_aureum_31082012.jpg",
+    "synonyms": [
+      "Pothos aureus",
+      "Rhaphidophora aurea"
+    ],
+    "genus": "Epipremnum",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/epipremnum-aureum",
+      "plant": "/api/v1/plants/epipremnum-aureum",
+      "genus": "/api/v1/genus/epipremnum"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Vine",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 182522,
+    "common_name": "Snake plant",
+    "slug": "dracaena-trifasciata",
+    "scientific_name": "Dracaena trifasciata",
+    "year": 1915,
+    "bibliography": "Prain, D. (1915) Bengal Plants 2: 1054.",
+    "author": "(Prain) Mabb.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Asparagus family",
+    "genus_id": 2575,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Snake_Plant_%28Sansevieria_trifasciata_%27Laurentii%27%29.jpg",
+    "synonyms": [
+      "Sansevieria trifasciata",
+      "Sansevieria laurentii"
+    ],
+    "genus": "Dracaena",
+    "family": "Asparagaceae",
+    "links": {
+      "self": "/api/v1/plants/dracaena-trifasciata",
+      "plant": "/api/v1/plants/dracaena-trifasciata",
+      "genus": "/api/v1/genus/dracaena"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Low Light"
+  },
+  {
+    "id": 119566,
+    "common_name": "Spider plant",
+    "slug": "chlorophytum-comosum",
+    "scientific_name": "Chlorophytum comosum",
+    "year": 1862,
+    "bibliography": "Thunb. (1794) Prodr. Pl. Cap. 63.",
+    "author": "(Thunb.) Jacques",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Asparagus family",
+    "genus_id": 1744,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Chlorophytum_comosum_Ampel.jpg",
+    "synonyms": [
+      "Anthericum comosum",
+      "Phalangium comosum"
+    ],
+    "genus": "Chlorophytum",
+    "family": "Asparagaceae",
+    "links": {
+      "self": "/api/v1/plants/chlorophytum-comosum",
+      "plant": "/api/v1/plants/chlorophytum-comosum",
+      "genus": "/api/v1/genus/chlorophytum"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 234110,
+    "common_name": "Peace lily",
+    "slug": "spathiphyllum-wallisii",
+    "scientific_name": "Spathiphyllum wallisii",
+    "year": 1877,
+    "bibliography": "Regel (1877) Gartenflora 26: 323.",
+    "author": "Regel",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 7890,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Spathiphyllum_wallisii_Kew.jpg",
+    "synonyms": [
+      "Massowia wallisii"
+    ],
+    "genus": "Spathiphyllum",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/spathiphyllum-wallisii",
+      "plant": "/api/v1/plants/spathiphyllum-wallisii",
+      "genus": "/api/v1/genus/spathiphyllum"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 136782,
+    "common_name": "Rubber plant",
+    "slug": "ficus-elastica",
+    "scientific_name": "Ficus elastica",
+    "year": 1819,
+    "bibliography": "Roxb. ex Hornem. (1819) Hort. Bot. Hafn. Suppl. 7.",
+    "author": "Roxb. ex Hornem.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mulberry family",
+    "genus_id": 2899,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Ficus_elastica_leaf_sim.jpg",
+    "synonyms": [
+      "Visiania elastica",
+      "Macrophthalma elastica"
+    ],
+    "genus": "Ficus",
+    "family": "Moraceae",
+    "links": {
+      "self": "/api/v1/plants/ficus-elastica",
+      "plant": "/api/v1/plants/ficus-elastica",
+      "genus": "/api/v1/genus/ficus"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": null,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 136845,
+    "common_name": "Fiddle-leaf fig",
+    "slug": "ficus-lyrata",
+    "scientific_name": "Ficus lyrata",
+    "year": 1895,
+    "bibliography": "Warb. (1894) Bot. Jahrb. Syst. 20: 172.",
+    "author": "Warb.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mulberry family",
+    "genus_id": 2899,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Ficus_lyrata_a1.jpg",
+    "synonyms": [
+      "Ficus pandurata"
+    ],
+    "genus": "Ficus",
+    "family": "Moraceae",
+    "links": {
+      "self": "/api/v1/plants/ficus-lyrata",
+      "plant": "/api/v1/plants/ficus-lyrata",
+      "genus": "/api/v1/genus/ficus"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 103683,
+    "common_name": "Aloe vera",
+    "slug": "aloe-vera",
+    "scientific_name": "Aloe vera",
+    "year": 1768,
+    "bibliography": "Burm.f. (1768) Fl. Indica: 83.",
+    "author": "(L.) Burm.f.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Asphodel family",
+    "genus_id": 435,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Aloe_vera_flower_inset.png",
+    "synonyms": [
+      "Aloe barbadensis",
+      "Aloe vulgaris"
+    ],
+    "genus": "Aloe",
+    "family": "Asphodelaceae",
+    "links": {
+      "self": "/api/v1/plants/aloe-vera",
+      "plant": "/api/v1/plants/aloe-vera",
+      "genus": "/api/v1/genus/aloe"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Succulent",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 196882,
+    "common_name": "ZZ plant",
+    "slug": "zamioculcas-zamiifolia",
+    "scientific_name": "Zamioculcas zamiifolia",
+    "year": 1905,
+    "bibliography": "Engl. (1905) Das Pflanzenreich IV, 23B: 305.",
+    "author": "(Lodd.) Engl.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 8902,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Zamioculcas_zamiifolia_leaves.jpg",
+    "synonyms": [
+      "Caladium zamiaefolium",
+      "Zamioculcas loddigesii"
+    ],
+    "genus": "Zamioculcas",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/zamioculcas-zamiifolia",
+      "plant": "/api/v1/plants/zamioculcas-zamiifolia",
+      "genus": "/api/v1/genus/zamioculcas"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Low Light"
+  },
+  {
+    "id": 124677,
+    "common_name": "Jade plant",
+    "slug": "crassula-ovata",
+    "scientific_name": "Crassula ovata",
+    "year": 1917,
+    "bibliography": "Druce (1917) Rep. Bot. Soc. Exch. Club Brit. Isles 1916: 617.",
+    "author": "(Mill.) Druce",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Stonecrop family",
+    "genus_id": 1899,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Crassula_ovata_potted.jpg",
+    "synonyms": [
+      "Cotyledon ovata",
+      "Crassula argentea"
+    ],
+    "genus": "Crassula",
+    "family": "Crassulaceae",
+    "links": {
+      "self": "/api/v1/plants/crassula-ovata",
+      "plant": "/api/v1/plants/crassula-ovata",
+      "genus": "/api/v1/genus/crassula"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Succulent",
+    "days_to_harvest": null,
+    "light": "Full Sun"
+  },
+  {
+    "id": 164228,
+    "common_name": "Heartleaf philodendron",
+    "slug": "philodendron-hederaceum",
+    "scientific_name": "Philodendron hederaceum",
+    "year": 1829,
+    "bibliography": "Schott (1829) Wiener Z. Kunst 1829: 780.",
+    "author": "(Jacq.) Schott",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 5433,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Philodendron_scandens_oxycardium_leaves.jpg",
+    "synonyms": [
+      "Philodendron scandens",
+      "Arum hederaceum"
+    ],
+    "genus": "Philodendron",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/philodendron-hederaceum",
+      "plant": "/api/v1/plants/philodendron-hederaceum",
+      "genus": "/api/v1/genus/philodendron"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Vine",
+    "days_to_harvest": null,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 103221,
+    "common_name": "Chinese evergreen",
+    "slug": "aglaonema-commutatum",
+    "scientific_name": "Aglaonema commutatum",
+    "year": 1856,
+    "bibliography": "Schott (1856) Syn. Aroid.: 123.",
+    "author": "Schott",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 212,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Aglaonema_commutatum_var._maculatum.jpg",
+    "synonyms": [
+      "Aglaonema marantifolium"
+    ],
+    "genus": "Aglaonema",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/aglaonema-commutatum",
+      "plant": "/api/v1/plants/aglaonema-commutatum",
+      "genus": "/api/v1/genus/aglaonema"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 126933,
+    "common_name": "Dumb cane",
+    "slug": "dieffenbachia-seguine",
+    "scientific_name": "Dieffenbachia seguine",
+    "year": 1832,
+    "bibliography": "Schott (1832) Melet. Bot.: 20.",
+    "author": "(Jacq.) Schott",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arum family",
+    "genus_id": 2244,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Dieffenbachia_seguine_%281%29.jpg",
+    "synonyms": [
+      "Arum seguine",
+      "Dieffenbachia maculata"
+    ],
+    "genus": "Dieffenbachia",
+    "family": "Araceae",
+    "links": {
+      "self": "/api/v1/plants/dieffenbachia-seguine",
+      "plant": "/api/v1/plants/dieffenbachia-seguine",
+      "genus": "/api/v1/genus/dieffenbachia"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 178992,
+    "common_name": "Dwarf umbrella tree",
+    "slug": "schefflera-arboricola",
+    "scientific_name": "Heptapleurum arboricola",
+    "year": 1890,
+    "bibliography": "Hayata (1916) Icon. Pl. Formosan. 6: 23.",
+    "author": "Hayata",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Ginseng family",
+    "genus_id": 3566,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Schefflera_arboricola.jpg",
+    "synonyms": [
+      "Schefflera arboricola"
+    ],
+    "genus": "Heptapleurum",
+    "family": "Araliaceae",
+    "links": {
+      "self": "/api/v1/plants/schefflera-arboricola",
+      "plant": "/api/v1/plants/schefflera-arboricola",
+      "genus": "/api/v1/genus/heptapleurum"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Shrub",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 128203,
+    "common_name": "Dragon tree",
+    "slug": "dracaena-marginata",
+    "scientific_name": "Dracaena marginata",
+    "year": 1789,
+    "bibliography": "Lam. (1789) Encycl. 2: 324.",
+    "author": "Lam.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Asparagus family",
+    "genus_id": 2575,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Dracaena_marginata_leaves.jpg",
+    "synonyms": [
+      "Dracaena reflexa var. angustifolia"
+    ],
+    "genus": "Dracaena",
+    "family": "Asparagaceae",
+    "links": {
+      "self": "/api/v1/plants/dracaena-marginata",
+      "plant": "/api/v1/plants/dracaena-marginata",
+      "genus": "/api/v1/genus/dracaena"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Shrub",
+    "days_to_harvest": null,
+    "light": "Low Light"
+  },
+  {
+    "id": 145988,
+    "common_name": "Peacock plant",
+    "slug": "goeppertia-makoyana",
+    "scientific_name": "Goeppertia makoyana",
+    "year": 1872,
+    "bibliography": "E.Morren (1872) Belgique Hort. 22: 321.",
+    "author": "(E.Morren) Borchsenius & S.Suárez",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Arrowroot family",
+    "genus_id": 3122,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Calathea_makoyana_leaves.jpg",
+    "synonyms": [
+      "Calathea makoyana",
+      "Maranta makoyana"
+    ],
+    "genus": "Goeppertia",
+    "family": "Marantaceae",
+    "links": {
+      "self": "/api/v1/plants/goeppertia-makoyana",
+      "plant": "/api/v1/plants/goeppertia-makoyana",
+      "genus": "/api/v1/genus/goeppertia"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 140455,
+    "common_name": "Wax plant",
+    "slug": "hoya-carnosa",
+    "scientific_name": "Hoya carnosa",
+    "year": 1810,
+    "bibliography": "R.Br. (1810) Prodr. Fl. Nov. Holl.: 460.",
+    "author": "(L.f.) R.Br.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Dogbane family",
+    "genus_id": 3698,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Hoya_carnosa_flowers.jpg",
+    "synonyms": [
+      "Asclepias carnosa",
+      "Hoya chinensis"
+    ],
+    "genus": "Hoya",
+    "family": "Apocynaceae",
+    "links": {
+      "self": "/api/v1/plants/hoya-carnosa",
+      "plant": "/api/v1/plants/hoya-carnosa",
+      "genus": "/api/v1/genus/hoya"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Vine",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 187763,
+    "common_name": "Inch plant",
+    "slug": "tradescantia-zebrina",
+    "scientific_name": "Tradescantia zebrina",
+    "year": 1849,
+    "bibliography": "Hort. ex Bosse (1849) Vollst. Handb. Bl.-Gart. 4: 655.",
+    "author": "Bosse",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Spiderwort family",
+    "genus_id": 6622,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Tradescantia_zebrina_01.jpg",
+    "synonyms": [
+      "Zebrina pendula",
+      "Tradescantia pendula"
+    ],
+    "genus": "Tradescantia",
+    "family": "Commelinaceae",
+    "links": {
+      "self": "/api/v1/plants/tradescantia-zebrina",
+      "plant": "/api/v1/plants/tradescantia-zebrina",
+      "genus": "/api/v1/genus/tradescantia"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 162234,
+    "common_name": "Baby rubber plant",
+    "slug": "peperomia-obtusifolia",
+    "scientific_name": "Peperomia obtusifolia",
+    "year": 1805,
+    "bibliography": "A.Dietr. (1831) Sp. Pl. 1: 154.",
+    "author": "(L.) A.Dietr.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Pepper family",
+    "genus_id": 5288,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Peperomia_obtusifolia_02.jpg",
+    "synonyms": [
+      "Piper obtusifolium",
+      "Peperomia magnoliaefolia"
+    ],
+    "genus": "Peperomia",
+    "family": "Piperaceae",
+    "links": {
+      "self": "/api/v1/plants/peperomia-obtusifolia",
+      "plant": "/api/v1/plants/peperomia-obtusifolia",
+      "genus": "/api/v1/genus/peperomia"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Herb",
+    "days_to_harvest": null,
+    "light": "Low Light"
+  },
+  {
+    "id": 111893,
+    "common_name": "Ponytail palm",
+    "slug": "beaucarnea-recurvata",
+    "scientific_name": "Beaucarnea recurvata",
+    "year": 1861,
+    "bibliography": "Lem. (1861) Ill. Hort. 8: misc. 59.",
+    "author": "Lem.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Asparagus family",
+    "genus_id": 894,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Beaucarnea_recurvata_trunk.jpg",
+    "synonyms": [
+      "Nolina recurvata"
+    ],
+    "genus": "Beaucarnea",
+    "family": "Asparagaceae",
+    "links": {
+      "self": "/api/v1/plants/beaucarnea-recurvata",
+      "plant": "/api/v1/plants/beaucarnea-recurvata",
+      "genus": "/api/v1/genus/beaucarnea"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": null,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 118221,
+    "common_name": "Parlor palm",
+    "slug": "chamaedorea-elegans",
+    "scientific_name": "Chamaedorea elegans",
+    "year": 1833,
+    "bibliography": "Mart. (1833) Hist. Nat. Palm. 3: 159.",
+    "author": "Mart.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Palm family",
+    "genus_id": 1655,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Chamaedorea_elegans_leaves.jpg",
+    "synonyms": [
+      "Neanthe bella",
+      "Collinia elegans"
+    ],
+    "genus": "Chamaedorea",
+    "family": "Arecaceae",
+    "links": {
+      "self": "/api/v1/plants/chamaedorea-elegans",
+      "plant": "/api/v1/plants/chamaedorea-elegans",
+      "genus": "/api/v1/genus/chamaedorea"
+    },
+    "edible": "No",
+    "vegetable": "No",
+    "growth_habit": "Palm",
+    "days_to_harvest": null,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 109482,
+    "common_name": "Tomato",
+    "slug": "solanum-lycopersicum",
+    "scientific_name": "Solanum lycopersicum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 185 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Nightshade family",
+    "genus_id": 5886,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg",
+    "synonyms": [
+      "Lycopersicon esculentum"
+    ],
+    "genus": "Solanum",
+    "family": "Solanaceae",
+    "links": {
+      "self": "/api/v1/plants/solanum-lycopersicum",
+      "plant": "/api/v1/plants/solanum-lycopersicum",
+      "genus": "/api/v1/genus/solanum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Vine",
+    "days_to_harvest": 98,
+    "light": "Full Sun"
+  },
+  {
+    "id": 125867,
+    "common_name": "Cucumber",
+    "slug": "cucumis-sativus",
+    "scientific_name": "Cucumis sativus",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 1012 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Gourd family",
+    "genus_id": 2022,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/96/Ars_cucumis_sativus.jpg",
+    "synonyms": [
+      "Cucumis esculentus"
+    ],
+    "genus": "Cucumis",
+    "family": "Cucurbitaceae",
+    "links": {
+      "self": "/api/v1/plants/cucumis-sativus",
+      "plant": "/api/v1/plants/cucumis-sativus",
+      "genus": "/api/v1/genus/cucumis"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Vine",
+    "days_to_harvest": 43,
+    "light": "Full Sun"
+  },
+  {
+    "id": 114674,
+    "common_name": "Bell pepper",
+    "slug": "capsicum-annuum",
+    "scientific_name": "Capsicum annuum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 188 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Nightshade family",
+    "genus_id": 1302,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Red_capsicum_and_cross_section.jpg",
+    "synonyms": [
+      "Capsicum frutescens"
+    ],
+    "genus": "Capsicum",
+    "family": "Solanaceae",
+    "links": {
+      "self": "/api/v1/plants/capsicum-annuum",
+      "plant": "/api/v1/plants/capsicum-annuum",
+      "genus": "/api/v1/genus/capsicum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Shrub",
+    "days_to_harvest": 92,
+    "light": "Full Sun"
+  },
+  {
+    "id": 128654,
+    "common_name": "Carrot",
+    "slug": "daucus-carota",
+    "scientific_name": "Daucus carota",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 242 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Carrot family",
+    "genus_id": 2154,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Daucus_carota_subsp._sativus_3.jpg",
+    "synonyms": [
+      "Daucus sativus"
+    ],
+    "genus": "Daucus",
+    "family": "Apiaceae",
+    "links": {
+      "self": "/api/v1/plants/daucus-carota",
+      "plant": "/api/v1/plants/daucus-carota",
+      "genus": "/api/v1/genus/daucus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 62,
+    "light": "Full Sun"
+  },
+  {
+    "id": 147551,
+    "common_name": "Lettuce",
+    "slug": "lactuca-sativa",
+    "scientific_name": "Lactuca sativa",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 795 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Aster family",
+    "genus_id": 4181,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Lettuce_Boston.jpg",
+    "synonyms": [
+      "Lactuca scariola var. sativa"
+    ],
+    "genus": "Lactuca",
+    "family": "Asteraceae",
+    "links": {
+      "self": "/api/v1/plants/lactuca-sativa",
+      "plant": "/api/v1/plants/lactuca-sativa",
+      "genus": "/api/v1/genus/lactuca"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 54,
+    "light": "Full Sun"
+  },
+  {
+    "id": 126138,
+    "common_name": "Zucchini",
+    "slug": "cucurbita-pepo",
+    "scientific_name": "Cucurbita pepo",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 1010 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Gourd family",
+    "genus_id": 2026,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Zucchini_and_cross_section.jpg",
+    "synonyms": [
+      "Cucurbita melopepo"
+    ],
+    "genus": "Cucurbita",
+    "family": "Cucurbitaceae",
+    "links": {
+      "self": "/api/v1/plants/cucurbita-pepo",
+      "plant": "/api/v1/plants/cucurbita-pepo",
+      "genus": "/api/v1/genus/cucurbita"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Vine",
+    "days_to_harvest": 97,
+    "light": "Full Sun"
+  },
+  {
+    "id": 165643,
+    "common_name": "Green bean",
+    "slug": "phaseolus-vulgaris",
+    "scientific_name": "Phaseolus vulgaris",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 723 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Pea family",
+    "genus_id": 5399,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Phaseolus_vulgaris_string_beans.jpg",
+    "synonyms": [
+      "Phaseolus nanus"
+    ],
+    "genus": "Phaseolus",
+    "family": "Fabaceae",
+    "links": {
+      "self": "/api/v1/plants/phaseolus-vulgaris",
+      "plant": "/api/v1/plants/phaseolus-vulgaris",
+      "genus": "/api/v1/genus/phaseolus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Vine",
+    "days_to_harvest": 100,
+    "light": "Full Sun"
+  },
+  {
+    "id": 166549,
+    "common_name": "Garden pea",
+    "slug": "pisum-sativum",
+    "scientific_name": "Pisum sativum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 727 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Pea family",
+    "genus_id": 5600,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/11/Peas_in_pods_-_Studio.jpg",
+    "synonyms": [
+      "Lathyrus oleraceus"
+    ],
+    "genus": "Pisum",
+    "family": "Fabaceae",
+    "links": {
+      "self": "/api/v1/plants/pisum-sativum",
+      "plant": "/api/v1/plants/pisum-sativum",
+      "genus": "/api/v1/genus/pisum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Vine",
+    "days_to_harvest": 37,
+    "light": "Full Sun"
+  },
+  {
+    "id": 169994,
+    "common_name": "Radish",
+    "slug": "raphanus-sativus",
+    "scientific_name": "Raphanus sativus",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 669 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mustard family",
+    "genus_id": 6053,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Radish_Raphanus_sativus_detail.jpg",
+    "synonyms": [
+      "Raphanus raphanistrum subsp. sativus"
+    ],
+    "genus": "Raphanus",
+    "family": "Brassicaceae",
+    "links": {
+      "self": "/api/v1/plants/raphanus-sativus",
+      "plant": "/api/v1/plants/raphanus-sativus",
+      "genus": "/api/v1/genus/raphanus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 49,
+    "light": "Full Sun"
+  },
+  {
+    "id": 184766,
+    "common_name": "Spinach",
+    "slug": "spinacia-oleracea",
+    "scientific_name": "Spinacia oleracea",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 1027 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Amaranth family",
+    "genus_id": 7922,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Spinacia_oleracea_Spinach.jpg",
+    "synonyms": [
+      "Spinacia glabra"
+    ],
+    "genus": "Spinacia",
+    "family": "Amaranthaceae",
+    "links": {
+      "self": "/api/v1/plants/spinacia-oleracea",
+      "plant": "/api/v1/plants/spinacia-oleracea",
+      "genus": "/api/v1/genus/spinacia"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 109,
+    "light": "Full Sun"
+  },
+  {
+    "id": 103323,
+    "common_name": "Onion",
+    "slug": "allium-cepa",
+    "scientific_name": "Allium cepa",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 300 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Amaryllis family",
+    "genus_id": 353,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Red_Onion_Cross_Section.jpg",
+    "synonyms": [
+      "Porrum cepa"
+    ],
+    "genus": "Allium",
+    "family": "Amaryllidaceae",
+    "links": {
+      "self": "/api/v1/plants/allium-cepa",
+      "plant": "/api/v1/plants/allium-cepa",
+      "genus": "/api/v1/genus/allium"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 106,
+    "light": "Full Sun"
+  },
+  {
+    "id": 109485,
+    "common_name": "Potato",
+    "slug": "solanum-tuberosum",
+    "scientific_name": "Solanum tuberosum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 185 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Nightshade family",
+    "genus_id": 5886,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Patates.jpg",
+    "synonyms": [
+      "Lycopersicon tuberosum"
+    ],
+    "genus": "Solanum",
+    "family": "Solanaceae",
+    "links": {
+      "self": "/api/v1/plants/solanum-tuberosum",
+      "plant": "/api/v1/plants/solanum-tuberosum",
+      "genus": "/api/v1/genus/solanum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 110,
+    "light": "Full Sun"
+  },
+  {
+    "id": 110996,
+    "common_name": "Broccoli",
+    "slug": "brassica-oleracea",
+    "scientific_name": "Brassica oleracea",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 667 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mustard family",
+    "genus_id": 1045,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Broccoli_and_cross_section_edit.jpg",
+    "synonyms": [],
+    "genus": "Brassica",
+    "family": "Brassicaceae",
+    "links": {
+      "self": "/api/v1/plants/brassica-oleracea",
+      "plant": "/api/v1/plants/brassica-oleracea",
+      "genus": "/api/v1/genus/brassica"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 67,
+    "light": "Full Sun"
+  },
+  {
+    "id": 109467,
+    "common_name": "Eggplant",
+    "slug": "solanum-melongena",
+    "scientific_name": "Solanum melongena",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 186 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Nightshade family",
+    "genus_id": 5886,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Solanum_melongena_24_08_2012_%281%29.jpg",
+    "synonyms": [
+      "Solanum esculentum"
+    ],
+    "genus": "Solanum",
+    "family": "Solanaceae",
+    "links": {
+      "self": "/api/v1/plants/solanum-melongena",
+      "plant": "/api/v1/plants/solanum-melongena",
+      "genus": "/api/v1/genus/solanum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Shrub",
+    "days_to_harvest": 81,
+    "light": "Full Sun"
+  },
+  {
+    "id": 110290,
+    "common_name": "Beetroot",
+    "slug": "beta-vulgaris",
+    "scientific_name": "Beta vulgaris",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 222 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Amaranth family",
+    "genus_id": 917,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Beetroot_jm26647.jpg",
+    "synonyms": [
+      "Beta cicla"
+    ],
+    "genus": "Beta",
+    "family": "Amaranthaceae",
+    "links": {
+      "self": "/api/v1/plants/beta-vulgaris",
+      "plant": "/api/v1/plants/beta-vulgaris",
+      "genus": "/api/v1/genus/beta"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 84,
+    "light": "Full Sun"
+  },
+  {
+    "id": 103362,
+    "common_name": "Garlic",
+    "slug": "allium-sativum",
+    "scientific_name": "Allium sativum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 296 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Amaryllis family",
+    "genus_id": 353,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Garlic_bulbs.jpg",
+    "synonyms": [
+      "Porrum sativum"
+    ],
+    "genus": "Allium",
+    "family": "Amaryllidaceae",
+    "links": {
+      "self": "/api/v1/plants/allium-sativum",
+      "plant": "/api/v1/plants/allium-sativum",
+      "genus": "/api/v1/genus/allium"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 98,
+    "light": "Full Sun"
+  },
+  {
+    "id": 197495,
+    "common_name": "Sweet corn",
+    "slug": "zea-mays",
+    "scientific_name": "Zea mays",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 971 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Grass family",
+    "genus_id": 8908,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Corn_Zea_mays.jpg",
+    "synonyms": [
+      "Zea saccharata"
+    ],
+    "genus": "Zea",
+    "family": "Poaceae",
+    "links": {
+      "self": "/api/v1/plants/zea-mays",
+      "plant": "/api/v1/plants/zea-mays",
+      "genus": "/api/v1/genus/zea"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Grass",
+    "days_to_harvest": 38,
+    "light": "Full Sun"
+  },
+  {
+    "id": 110967,
+    "common_name": "Cabbage",
+    "slug": "brassica-oleracea-capitata",
+    "scientific_name": "Brassica oleracea var. capitata",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 667 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "variety",
+    "family_common_name": "Mustard family",
+    "genus_id": 1045,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Cabbage_and_cross_section_on_white.jpg",
+    "synonyms": [],
+    "genus": "Brassica",
+    "family": "Brassicaceae",
+    "links": {
+      "self": "/api/v1/plants/brassica-oleracea-capitata",
+      "plant": "/api/v1/plants/brassica-oleracea-capitata",
+      "genus": "/api/v1/genus/brassica"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 43,
+    "light": "Full Sun"
+  },
+  {
+    "id": 125883,
+    "common_name": "Kale",
+    "slug": "brassica-oleracea-acephala",
+    "scientific_name": "Brassica oleracea var. sabellica",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 667 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "variety",
+    "family_common_name": "Mustard family",
+    "genus_id": 1045,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Kale-bundle.jpg",
+    "synonyms": [
+      "Brassica oleracea var. acephala"
+    ],
+    "genus": "Brassica",
+    "family": "Brassicaceae",
+    "links": {
+      "self": "/api/v1/plants/brassica-oleracea-acephala",
+      "plant": "/api/v1/plants/brassica-oleracea-acephala",
+      "genus": "/api/v1/genus/brassica"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 76,
+    "light": "Full Sun"
+  },
+  {
+    "id": 184510,
+    "common_name": "Cauliflower",
+    "slug": "brassica-oleracea-botrytis",
+    "scientific_name": "Brassica oleracea var. botrytis",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 667 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "variety",
+    "family_common_name": "Mustard family",
+    "genus_id": 1045,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/26/Cauliflower_Combo.jpg",
+    "synonyms": [],
+    "genus": "Brassica",
+    "family": "Brassicaceae",
+    "links": {
+      "self": "/api/v1/plants/brassica-oleracea-botrytis",
+      "plant": "/api/v1/plants/brassica-oleracea-botrytis",
+      "genus": "/api/v1/genus/brassica"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 77,
+    "light": "Full Sun"
+  },
+  {
+    "id": 153093,
+    "common_name": "Apple",
+    "slug": "malus-domestica",
+    "scientific_name": "Malus domestica",
+    "year": 1803,
+    "bibliography": "Theor. Prakt. Handb. Forstbot. 2: 1272 (1803)",
+    "author": "Borkh.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rose family",
+    "genus_id": 4443,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Fuji_apple.jpg",
+    "synonyms": [
+      "Malus pumila",
+      "Pyrus malus"
+    ],
+    "genus": "Malus",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/malus-domestica",
+      "plant": "/api/v1/plants/malus-domestica",
+      "genus": "/api/v1/genus/malus"
+    },
+    "edible": "Yes",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": 80,
+    "light": "Full Sun"
+  },
+  {
+    "id": 172332,
+    "common_name": "Peach",
+    "slug": "prunus-persica",
+    "scientific_name": "Prunus persica",
+    "year": 1801,
+    "bibliography": "Beytr. Entw. Pragm. Geschichte Natur-Reiche 1: 30 (1801)",
+    "author": "(L.) Batsch",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rose family",
+    "genus_id": 5780,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Autumn_Red_peaches.jpg",
+    "synonyms": [
+      "Amygdalus persica"
+    ],
+    "genus": "Prunus",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/prunus-persica",
+      "plant": "/api/v1/plants/prunus-persica",
+      "genus": "/api/v1/genus/prunus"
+    },
+    "edible": "Yes",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": 74,
+    "light": "Full Sun"
+  },
+  {
+    "id": 173200,
+    "common_name": "Pear",
+    "slug": "pyrus-communis",
+    "scientific_name": "Pyrus communis",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 479 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rose family",
+    "genus_id": 5956,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Pears.jpg",
+    "synonyms": [
+      "Pyrus domestica"
+    ],
+    "genus": "Pyrus",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/pyrus-communis",
+      "plant": "/api/v1/plants/pyrus-communis",
+      "genus": "/api/v1/genus/pyrus"
+    },
+    "edible": "Yes",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": 115,
+    "light": "Full Sun"
+  },
+  {
+    "id": 123891,
+    "common_name": "Lemon",
+    "slug": "citrus-limon",
+    "scientific_name": "Citrus limon",
+    "year": 1768,
+    "bibliography": "Fl. Indica: 173 (1768)",
+    "author": "(L.) Osbeck",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rue family",
+    "genus_id": 1693,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Lemon.jpg",
+    "synonyms": [
+      "Citrus medica var. limon"
+    ],
+    "genus": "Citrus",
+    "family": "Rutaceae",
+    "links": {
+      "self": "/api/v1/plants/citrus-limon",
+      "plant": "/api/v1/plants/citrus-limon",
+      "genus": "/api/v1/genus/citrus"
+    },
+    "edible": "Yes",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": 41,
+    "light": "Full Sun"
+  },
+  {
+    "id": 123933,
+    "common_name": "Sweet orange",
+    "slug": "citrus-sinensis",
+    "scientific_name": "Citrus sinensis",
+    "year": 1765,
+    "bibliography": "Reise Ostindien 1: 250 (1765)",
+    "author": "(L.) Osbeck",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rue family",
+    "genus_id": 1693,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg",
+    "synonyms": [
+      "Citrus aurantium var. sinensis"
+    ],
+    "genus": "Citrus",
+    "family": "Rutaceae",
+    "links": {
+      "self": "/api/v1/plants/citrus-sinensis",
+      "plant": "/api/v1/plants/citrus-sinensis",
+      "genus": "/api/v1/genus/citrus"
+    },
+    "edible": "Yes",
+    "vegetable": "No",
+    "growth_habit": "Tree",
+    "days_to_harvest": 110,
+    "light": "Full Sun"
+  },
+  {
+    "id": 172336,
+    "common_name": "Plum",
+    "slug": "prunus-domestica",
+    "scientific_name": "Prunus domestica",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 475 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rose family",
+    "genus_id": 5780,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Prunus_domestica_fruit_02.jpg",
+    "synonyms": [
+      "Prunus communis"
+    ],
+    "genus": "Prunus",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/prunus-domestica",
+      "plant": "/api/v1/plants/prunus-domestica",
+      "genus": "/api/v1/genus/prunus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Tree",
+    "days_to_harvest": 39,
+    "light": "Full Sun"
+  },
+  {
+    "id": 171887,
+    "common_name": "Apricot",
+    "slug": "prunus-armeniaca",
+    "scientific_name": "Prunus armeniaca",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 474 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rose family",
+    "genus_id": 5780,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Apricot_and_cross_section.jpg",
+    "synonyms": [
+      "Armeniaca vulgaris"
+    ],
+    "genus": "Prunus",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/prunus-armeniaca",
+      "plant": "/api/v1/plants/prunus-armeniaca",
+      "genus": "/api/v1/genus/prunus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Tree",
+    "days_to_harvest": 51,
+    "light": "Full Sun"
+  },
+  {
+    "id": 171844,
+    "common_name": "Sweet cherry",
+    "slug": "prunus-avium",
+    "scientific_name": "Prunus avium",
+    "year": 1755,
+    "bibliography": "Fl. Suec., ed. 2: 165 (1755)",
+    "author": "(L.) L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Rose family",
+    "genus_id": 5780,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Cherry_Stella444.jpg",
+    "synonyms": [
+      "Cerasus avium"
+    ],
+    "genus": "Prunus",
+    "family": "Rosaceae",
+    "links": {
+      "self": "/api/v1/plants/prunus-avium",
+      "plant": "/api/v1/plants/prunus-avium",
+      "genus": "/api/v1/genus/prunus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Tree",
+    "days_to_harvest": 52,
+    "light": "Full Sun"
+  },
+  {
+    "id": 136773,
+    "common_name": "Common fig",
+    "slug": "ficus-carica",
+    "scientific_name": "Ficus carica",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 1059 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mulberry family",
+    "genus_id": 2899,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Fig_and_leaves_on_tree.jpg",
+    "synonyms": [
+      "Ficus communis"
+    ],
+    "genus": "Ficus",
+    "family": "Moraceae",
+    "links": {
+      "self": "/api/v1/plants/ficus-carica",
+      "plant": "/api/v1/plants/ficus-carica",
+      "genus": "/api/v1/genus/ficus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Tree",
+    "days_to_harvest": 115,
+    "light": "Full Sun"
+  },
+  {
+    "id": 154055,
+    "common_name": "Mango",
+    "slug": "mangifera-indica",
+    "scientific_name": "Mangifera indica",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 200 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Cashew family",
+    "genus_id": 4474,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg",
+    "synonyms": [
+      "Mangifera domestica"
+    ],
+    "genus": "Mangifera",
+    "family": "Anacardiaceae",
+    "links": {
+      "self": "/api/v1/plants/mangifera-indica",
+      "plant": "/api/v1/plants/mangifera-indica",
+      "genus": "/api/v1/genus/mangifera"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Tree",
+    "days_to_harvest": 113,
+    "light": "Full Sun"
+  },
+  {
+    "id": 174676,
+    "common_name": "Rosemary",
+    "slug": "salvia-rosmarinus",
+    "scientific_name": "Salvia rosmarinus",
+    "year": 1836,
+    "bibliography": "Fl. Odes.: 14 (1836)",
+    "author": "Spenn.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mint family",
+    "genus_id": 6397,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Rosemary_bush_2.jpg",
+    "synonyms": [
+      "Rosmarinus officinalis"
+    ],
+    "genus": "Salvia",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/salvia-rosmarinus",
+      "plant": "/api/v1/plants/salvia-rosmarinus",
+      "genus": "/api/v1/genus/salvia"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Shrub",
+    "days_to_harvest": 42,
+    "light": "Full Sun"
+  },
+  {
+    "id": 188825,
+    "common_name": "Thyme",
+    "slug": "thymus-vulgaris",
+    "scientific_name": "Thymus vulgaris",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 591 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mint family",
+    "genus_id": 6554,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Thymus_vulgaris_002.JPG",
+    "synonyms": [
+      "Origanum thymus"
+    ],
+    "genus": "Thymus",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/thymus-vulgaris",
+      "plant": "/api/v1/plants/thymus-vulgaris",
+      "genus": "/api/v1/genus/thymus"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 70,
+    "light": "Full Sun"
+  },
+  {
+    "id": 156382,
+    "common_name": "Peppermint",
+    "slug": "mentha-x-piperita",
+    "scientific_name": "Mentha x piperita",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 576 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "hybrid",
+    "family_common_name": "Mint family",
+    "genus_id": 4545,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Mentha_x_piperita_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-093.jpg",
+    "synonyms": [
+      "Mentha piperita"
+    ],
+    "genus": "Mentha",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/mentha-x-piperita",
+      "plant": "/api/v1/plants/mentha-x-piperita",
+      "genus": "/api/v1/genus/mentha"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 63,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 165039,
+    "common_name": "Parsley",
+    "slug": "petroselinum-crispum",
+    "scientific_name": "Petroselinum crispum",
+    "year": 1866,
+    "bibliography": "Fl. Transsilv.: 254 (1866)",
+    "author": "(Mill.) Fuss",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Carrot family",
+    "genus_id": 5357,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Parsley_Curled_Parsley.jpg",
+    "synonyms": [
+      "Apium petroselinum"
+    ],
+    "genus": "Petroselinum",
+    "family": "Apiaceae",
+    "links": {
+      "self": "/api/v1/plants/petroselinum-crispum",
+      "plant": "/api/v1/plants/petroselinum-crispum",
+      "genus": "/api/v1/genus/petroselinum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 116,
+    "light": "Partial Shade"
+  },
+  {
+    "id": 124316,
+    "common_name": "Cilantro",
+    "slug": "coriandrum-sativum",
+    "scientific_name": "Coriandrum sativum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 256 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Carrot family",
+    "genus_id": 1856,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Coriandrum_sativum_Subias.jpg",
+    "synonyms": [
+      "Coriandrum majus"
+    ],
+    "genus": "Coriandrum",
+    "family": "Apiaceae",
+    "links": {
+      "self": "/api/v1/plants/coriandrum-sativum",
+      "plant": "/api/v1/plants/coriandrum-sativum",
+      "genus": "/api/v1/genus/coriandrum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 88,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 150024,
+    "common_name": "English lavender",
+    "slug": "lavandula-angustifolia",
+    "scientific_name": "Lavandula angustifolia",
+    "year": 1768,
+    "bibliography": "Gard. Dict. ed. 8: n.° 2 (1768)",
+    "author": "Mill.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mint family",
+    "genus_id": 4252,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/85/Lavandula_angustifolia_002.JPG",
+    "synonyms": [
+      "Lavandula officinalis"
+    ],
+    "genus": "Lavandula",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/lavandula-angustifolia",
+      "plant": "/api/v1/plants/lavandula-angustifolia",
+      "genus": "/api/v1/genus/lavandula"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Shrub",
+    "days_to_harvest": 114,
+    "light": "Full Sun"
+  },
+  {
+    "id": 159938,
+    "common_name": "Oregano",
+    "slug": "origanum-vulgare",
+    "scientific_name": "Origanum vulgare",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 590 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mint family",
+    "genus_id": 4980,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Origanum_vulgare_001.JPG",
+    "synonyms": [
+      "Origanum creticum"
+    ],
+    "genus": "Origanum",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/origanum-vulgare",
+      "plant": "/api/v1/plants/origanum-vulgare",
+      "genus": "/api/v1/genus/origanum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 49,
+    "light": "Full Sun"
+  },
+  {
+    "id": 174661,
+    "common_name": "Common sage",
+    "slug": "salvia-officinalis",
+    "scientific_name": "Salvia officinalis",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 23 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Mint family",
+    "genus_id": 6397,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Salvia_officinalis_001.JPG",
+    "synonyms": [
+      "Salvia major"
+    ],
+    "genus": "Salvia",
+    "family": "Lamiaceae",
+    "links": {
+      "self": "/api/v1/plants/salvia-officinalis",
+      "plant": "/api/v1/plants/salvia-officinalis",
+      "genus": "/api/v1/genus/salvia"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Shrub",
+    "days_to_harvest": 72,
+    "light": "Full Sun"
+  },
+  {
+    "id": 103387,
+    "common_name": "Chives",
+    "slug": "allium-schoenoprasum",
+    "scientific_name": "Allium schoenoprasum",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 301 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Amaryllis family",
+    "genus_id": 353,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Chives_flowering.jpg",
+    "synonyms": [
+      "Allium sibiricum"
+    ],
+    "genus": "Allium",
+    "family": "Amaryllidaceae",
+    "links": {
+      "self": "/api/v1/plants/allium-schoenoprasum",
+      "plant": "/api/v1/plants/allium-schoenoprasum",
+      "genus": "/api/v1/genus/allium"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 88,
+    "light": "Indirect Light"
+  },
+  {
+    "id": 105553,
+    "common_name": "Dill",
+    "slug": "anethum-graveolens",
+    "scientific_name": "Anethum graveolens",
+    "year": 1753,
+    "bibliography": "Sp. Pl.: 263 (1753)",
+    "author": "L.",
+    "status": "accepted",
+    "rank": "species",
+    "family_common_name": "Carrot family",
+    "genus_id": 497,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Anethum_graveolens_002.JPG",
+    "synonyms": [
+      "Peucedanum graveolens"
+    ],
+    "genus": "Anethum",
+    "family": "Apiaceae",
+    "links": {
+      "self": "/api/v1/plants/anethum-graveolens",
+      "plant": "/api/v1/plants/anethum-graveolens",
+      "genus": "/api/v1/genus/anethum"
+    },
+    "edible": "Yes",
+    "vegetable": "Yes",
+    "growth_habit": "Herb",
+    "days_to_harvest": 60,
+    "light": "Full Sun"
+  }
+],
+  "links": {
+    "self": "/api/v1/plants?page=1",
+    "first": "/api/v1/plants?page=1",
+    "next": "/api/v1/plants?page=2",
+    "last": "/api/v1/plants?page=8392"
+  },
+  "meta": {
+    "total": 64
+  }
+}

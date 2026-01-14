@@ -4,6 +4,7 @@ from .details import PlantDetailView
 from .garden import GardenView
 from .journal import JournalView
 from .reminders import RemindersView
+from .collections import CollectionsView
 
 __all__ = [
     'DashboardView',
@@ -11,5 +12,6 @@ __all__ = [
     'PlantDetailView',
     'GardenView',
     'JournalView',
-    'RemindersView'
+    'RemindersView',
+    'CollectionsView'
 ]

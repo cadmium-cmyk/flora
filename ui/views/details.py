@@ -30,12 +30,17 @@ class PlantDetailView:
         self.date_added_row = builder.detail_date
         self.days_owned_row = builder.detail_counter
         self.watered_row = builder.detail_watered_row
-        self.btn_save = builder.save_edits_button
+        self.btn_save = builder.detail_save_btn
+        self.dropdown = builder.detail_assign_dropdown
         self.btn_water = builder.water_button
         self.btn_fav = builder.fav_button
         self.btn_delete = builder.delete_button
         self.btn_back = builder.back_button
-        self.change_photo_btn = builder.change_photo_button
+        
+        # Setup click gesture for image
+        click_gesture = Gtk.GestureClick()
+        click_gesture.connect("pressed", self._on_image_pressed)
+        self.image.add_controller(click_gesture)
         
         self.new_image_path = None
         
@@ -47,7 +52,7 @@ class PlantDetailView:
         self.btn_delete.connect("clicked", self._on_delete_clicked)
         self.btn_save.connect("clicked", self._on_save_edits_clicked)
         self.btn_water.connect("clicked", self._on_water_clicked)
-        self.change_photo_btn.connect("clicked", self._on_change_photo_clicked)
+        self.dropdown.connect("notify::selected-item", self._on_dropdown_changed)
 
     def load_plant(self, plant_data):
         """Populates the view with plant data and checks DB for existing records."""
@@ -72,14 +77,17 @@ class PlantDetailView:
 
         # 2. Load Image (Threaded)
         # Reset avatar first
-        self.image.set_custom_image(None)
-        
-        # Set text for initials
-        name = p.get('common_name') or p.get('scientific_name') or "Unknown"
-        self.image.set_text(name)
+        self.image.set_paintable(None)
         
         if p.get('image_url'):
             threading.Thread(target=self._load_image, args=(p['image_url'],), daemon=True).start()
+        else:
+             # Load default image
+            try:
+                texture = Gdk.Texture.new_from_resource("/com/github/cadmiumcmyk/Flora/resources/flora-flowers.svg")
+                self.image.set_paintable(texture)
+            except:
+                pass
 
         # 3. Check Database State (Is this in My Garden?)
         # We access the cursor directly or we could add a method in database.py
@@ -91,10 +99,13 @@ class PlantDetailView:
 
         if record:
             self._populate_existing_plant(record)
+            self.dropdown.set_visible(True)
+            self._populate_dropdown(p['id'])
         else:
             self._populate_new_plant(p)
+            self.dropdown.set_visible(False)
             
-        # 4. Show the page
+        # 5. Show the page
         self.main_stack.set_visible_child_name("details_page")
 
     def _populate_existing_plant(self, record):
@@ -268,7 +279,8 @@ class PlantDetailView:
                 
                 if not texture:
                     # Download if not in cache or cache load failed
-                    response = requests.get(url, timeout=10)
+                    headers = {'User-Agent': 'Flora/0.1 (https://github.com/cadmiumcmyk/Flora; your@email.com)'}
+                    response = requests.get(url, headers=headers, timeout=10)
                     if response.status_code == 200:
                         # Save to cache
                         with open(cache_path, 'wb') as f:
@@ -288,10 +300,15 @@ class PlantDetailView:
         except Exception as e:
             print(f"Image load error: {e}")
             GLib.idle_add(self.spinner.set_spinning, False)
-            # Avatar will just show initials if loading fails
+            # Load default image
+            try:
+                texture = Gdk.Texture.new_from_resource("/com/github/cadmiumcmyk/Flora/resources/flora-flowers.svg")
+                GLib.idle_add(self.image.set_paintable, texture)
+            except:
+                pass
 
     def _set_texture(self, texture):
-        self.image.set_custom_image(texture)
+        self.image.set_paintable(texture)
         self.spinner.set_spinning(False)
 
     # --- Actions ---
@@ -322,6 +339,8 @@ class PlantDetailView:
         if success:
             self.btn_fav.set_icon_name("starred-symbolic")
             self.btn_delete.set_visible(True)
+            self.dropdown.set_visible(True)
+            self._populate_dropdown(p['id'])
             self.window.show_toast("Added to Garden!")
         else:
             self.window.show_toast("Already in Garden")
@@ -353,13 +372,17 @@ class PlantDetailView:
                 self.current_plant['image_url'] = new_url
             self.window.show_toast("Changes saved")
 
+    def _on_image_pressed(self, gesture, n_press, x, y):
+        self._on_change_photo_clicked(None)
+
     def _on_change_photo_clicked(self, btn):
-        dialog = Gtk.FileChooserDialog(
+        dialog = Gtk.FileChooserNative(
             title="Select Plant Photo", 
             transient_for=self.window, 
-            action=Gtk.FileChooserAction.OPEN
+            action=Gtk.FileChooserAction.OPEN,
+            accept_label="_Open",
+            cancel_label="_Cancel"
         )
-        dialog.add_buttons("_Cancel", Gtk.ResponseType.CANCEL, "_Open", Gtk.ResponseType.OK)
         
         filter_img = Gtk.FileFilter()
         filter_img.set_name("Images")
@@ -368,10 +391,10 @@ class PlantDetailView:
         dialog.add_filter(filter_img)
 
         dialog.connect("response", self._on_file_dialog_response)
-        dialog.present()
+        dialog.show()
 
     def _on_file_dialog_response(self, dialog, response_id):
-        if response_id == Gtk.ResponseType.OK:
+        if response_id == Gtk.ResponseType.ACCEPT:
             file = dialog.get_file()
             self.new_image_path = "file://" + file.get_path()
             
@@ -379,7 +402,7 @@ class PlantDetailView:
             f = Gio.File.new_for_path(file.get_path())
             try:
                 texture = Gdk.Texture.new_from_file(f)
-                self.image.set_custom_image(texture)
+                self.image.set_paintable(texture)
             except Exception as e:
                 print(f"Error loading preview: {e}")
                 
@@ -410,10 +433,87 @@ class PlantDetailView:
 
     def _confirm_delete(self, dialog, response):
         if response == "remove":
+            # Remove cached image if it exists
+            image_url = self.current_plant.get('image_url')
+            if image_url and not image_url.startswith("file://"):
+                cache_path = self._get_cache_path(image_url)
+                if os.path.exists(cache_path):
+                    try:
+                        os.remove(cache_path)
+                    except Exception as e:
+                        print(f"Failed to delete cache file: {e}")
+
             if self.db.remove_favorite(self.current_plant['id']):
                 self.window.show_toast(f"Removed {self.current_plant.get('common_name')}")
+                # Refresh garden view
+                self.window.garden_view.refresh()
                 self._go_back(None)
         dialog.close()
+
+    def _populate_dropdown(self, p_id):
+        # Prevent signal triggering during population
+        self.dropdown.freeze_notify()
+        
+        layouts = self.db.get_layouts()
+        # Layouts: id, name, type, date
+        
+        # Prepare list: ["None"] + [Name (Type)]
+        items = ["None"]
+        layout_ids = [None] # Corresponds to items indices
+        
+        for l in layouts:
+            l_id, name, l_type = l[0], l[1], l[2]
+            items.append(f"{name} ({l_type})")
+            layout_ids.append(l_id)
+            
+        model = Gtk.StringList.new(items)
+        self.dropdown.set_model(model)
+        
+        # Determine current selection
+        # Assuming 1-1 mapping logic for UI, select the first one found or None
+        current_layouts = self.db.get_layouts_for_plant(p_id)
+        
+        selected_idx = 0
+        if current_layouts:
+            # Find index of first match
+            first_id = current_layouts[0]
+            try:
+                selected_idx = layout_ids.index(first_id)
+            except ValueError:
+                selected_idx = 0
+        
+        self.dropdown.set_selected(selected_idx)
+        self.dropdown_layout_ids = layout_ids # Store for signal handler
+        
+        self.dropdown.thaw_notify()
+
+    def _on_dropdown_changed(self, dropdown, pspec):
+        if not self.current_plant: return
+        
+        idx = dropdown.get_selected()
+        if idx == Gtk.INVALID_LIST_POSITION: return
+        
+        # Ensure plant is saved first
+        p_id = self.current_plant['id']
+        self.db.cursor.execute("SELECT id FROM favorites WHERE id=?", (p_id,))
+        if not self.db.cursor.fetchone():
+            # If user tries to assign unsaved plant, warn and revert?
+            # Or better, just return and let them save.
+            self.window.show_toast("Please save plant to garden first")
+            # Revert selection to 0 (None) or previous? 
+            # Ideally we'd block the signal, but simplified:
+            return
+
+        target_l_id = self.dropdown_layout_ids[idx]
+        
+        # Clear existing assignments (Enforce 1-1 for this UI)
+        self.db.clear_plant_layouts(p_id)
+        
+        if target_l_id is not None:
+            self.db.add_layout_item(target_l_id, p_id)
+            # self.window.show_toast("Collection updated")
+        else:
+            pass # self.window.show_toast("Removed from collection")
 
     def _go_back(self, btn):
         # Return to main stack
