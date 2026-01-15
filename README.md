@@ -32,7 +32,7 @@ Flora is designed to be installed via Flatpak.
 1.  Ensure you have `flatpak` and `flatpak-builder` installed.
 2.  Clone the repository:
     ```bash
-    git clone https://github.com/cadmiumcmyk/Flora.git
+    git clone https://github.com/cadmium-cmyk/flora.git
     cd Flora
     ```
 3.  Build and install:
