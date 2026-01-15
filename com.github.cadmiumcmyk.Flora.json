@@ -31,6 +31,7 @@
         "install -D -p ui/views/details.py /app/bin/ui/views/details.py",
         "install -D -p ui/views/garden.py /app/bin/ui/views/garden.py",
         "install -D -p ui/views/journal.py /app/bin/ui/views/journal.py",
+        "install -D -p ui/views/journal_editor.py /app/bin/ui/views/journal_editor.py",
         "install -D -p ui/views/reminders.py /app/bin/ui/views/reminders.py",
         "install -D -p ui/views/collections.py /app/bin/ui/views/collections.py",
         "install -D -p ui/views/orientation.py /app/bin/ui/views/orientation.py",

@@ -17,7 +17,6 @@ class JournalEditorView:
         self.bold_btn = builder.editor_bold_btn
         self.italic_btn = builder.editor_italic_btn
         self.underline_btn = builder.editor_underline_btn
-        self.bullet_btn = builder.editor_bullet_btn
         
         self.align_left_btn = builder.editor_align_left_btn
         self.align_center_btn = builder.editor_align_center_btn
@@ -26,6 +25,8 @@ class JournalEditorView:
         
         # Internal State
         self.current_entry_id = None
+        self.active_tags = set()
+        self.ignore_mark_set = False
         
         # --- Connect Signals ---
         self.back_btn.connect("clicked", self._on_cancel_clicked)
@@ -34,7 +35,6 @@ class JournalEditorView:
         self.bold_btn.connect("clicked", lambda b: self._apply_tag("bold"))
         self.italic_btn.connect("clicked", lambda b: self._apply_tag("italic"))
         self.underline_btn.connect("clicked", lambda b: self._apply_tag("underline"))
-        self.bullet_btn.connect("clicked", lambda b: self._insert_bullet())
         
         self.align_left_btn.connect("clicked", lambda b: self._apply_alignment(Gtk.Justification.LEFT))
         self.align_center_btn.connect("clicked", lambda b: self._apply_alignment(Gtk.Justification.CENTER))
@@ -45,6 +45,9 @@ class JournalEditorView:
 
     def _setup_formatting(self):
         buf = self.text_view.get_buffer()
+        buf.connect("mark-set", self._on_mark_set)
+        buf.connect("insert-text", self._on_insert_text_before)
+        buf.connect_after("insert-text", self._on_insert_text_after)
         
         # Create tags
         if not buf.get_tag_table().lookup("bold"):
@@ -82,14 +85,70 @@ class JournalEditorView:
         buf = self.text_view.get_buffer()
         if buf.get_has_selection():
             start, end = buf.get_selection_bounds()
-            buf.apply_tag_by_name(tag_name, start, end)
+            
+            # Check if tag is present on selection
+            # Iterate through selection to check presence? Or just assume toggle logic based on start?
+            # Standard toggling: If range has tag anywhere or fully?
+            # Let's check first char.
+            has_tag = start.has_tag(buf.get_tag_table().lookup(tag_name))
+            
+            if has_tag:
+                buf.remove_tag_by_name(tag_name, start, end)
+                if tag_name in self.active_tags:
+                    self.active_tags.remove(tag_name)
+            else:
+                buf.apply_tag_by_name(tag_name, start, end)
+                self.active_tags.add(tag_name)
         else:
-            # Maybe toggle "inserting" mode? 
-            # For simplicity, we just operate on selection for now.
-            # But robust editors often allow toggling style for typing.
-            # GtkTextView doesn't make this trivial without some logic.
-            # We'll just show a toast if no selection.
-            self.window.show_toast("Select text to format")
+            # Toggle active state for typing
+            if tag_name in self.active_tags:
+                self.active_tags.remove(tag_name)
+                # self.window.show_toast(f"{tag_name} off")
+            else:
+                self.active_tags.add(tag_name)
+                # self.window.show_toast(f"{tag_name} on")
+
+    def _update_active_tags_from_cursor(self):
+        buf = self.text_view.get_buffer()
+        cursor = buf.get_iter_at_mark(buf.get_insert())
+        
+        # Tags at cursor
+        tags = cursor.get_tags()
+        tag_names = [t.get_property("name") for t in tags]
+        
+        # Update active_tags to match cursor context
+        # Only for formatting tags
+        for t in ["bold", "italic", "underline"]:
+            if t in tag_names:
+                self.active_tags.add(t)
+            else:
+                if t in self.active_tags:
+                    self.active_tags.remove(t)
+
+    def _on_mark_set(self, buf, iter, mark):
+        if self.ignore_mark_set:
+            return
+        if mark.get_name() == "insert":
+            self._update_active_tags_from_cursor()
+
+    def _on_insert_text_before(self, buf, location, text, length):
+        self.ignore_mark_set = True
+
+    def _on_insert_text_after(self, buf, location, text, length):
+        # location points to end of inserted text
+        end = location
+        start = end.copy()
+        start.backward_chars(length)
+        
+        for tag in self.active_tags:
+            buf.apply_tag_by_name(tag, start, end)
+            
+        self.ignore_mark_set = False
+        # No need to update active tags from cursor here as we want to keep what we had
+        # But if we moved cursor implicitly, we might want to check? 
+        # Actually, we enforced active tags on the new text, so cursor (at end) will have them.
+        # So updating is safe.
+        self._update_active_tags_from_cursor()
 
     def _apply_alignment(self, justification):
         buf = self.text_view.get_buffer()
@@ -123,16 +182,6 @@ class JournalEditorView:
             buf.remove_tag_by_name(t, start, end)
             
         buf.apply_tag_by_name(tag_name, start, end)
-
-    def _insert_bullet(self):
-        buf = self.text_view.get_buffer()
-        if buf.get_has_selection():
-            # If selection, maybe bulletize each line?
-            # For now, simple insertion at cursor
-            start, end = buf.get_selection_bounds()
-            buf.delete(start, end)
-        
-        buf.insert_at_cursor("• ")
 
     def _on_save_clicked(self, btn):
         buf = self.text_view.get_buffer()

@@ -1,7 +1,6 @@
 import threading
 import os
 import hashlib
-import requests
 from gi.repository import Gtk, Adw, Gio, GLib, Pango, Gdk
 
 class CollectionsView:

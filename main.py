@@ -142,11 +142,12 @@ class App(Adw.Application):
             transient_for=self.win,
             application_name="Flora",
             application_icon="com.github.cadmiumcmyk.Flora",
-            developer_name="Andrew Bair",
+            developer_name="Andrew Blair",
             version="v0.0.5-beta",
             license_type="GTK_LICENSE_GPL_3_0",
             copyright="© 2026 Andrew Blair",
-            website="https://github.com/cadmium-cmyk/flora"
+            website="https://github.com/cadmium-cmyk/flora",
+            issue_url="https://github.com/cadmium-cmyk/flora/issues"
         )
         if Adw.StyleManager.get_default().get_dark():
             about.add_css_class("dark-mode")

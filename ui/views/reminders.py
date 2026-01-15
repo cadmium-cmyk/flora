@@ -1,7 +1,9 @@
 import datetime
 import uuid
 import os
-from gi.repository import Gtk, Adw, Gio
+import threading
+import requests
+from gi.repository import Gtk, Adw, Gio, GLib
 
 def generate_ics(reminders):
     """
@@ -83,14 +85,16 @@ class RemindersView:
         self.db = db
 
         # --- UI References ---
-        self.upcoming_stack = builder.reminder_stack
+        self.root_stack = builder.reminders_root_stack
         self.upcoming_list = builder.reminder_list
         self.daily_stack = builder.daily_reminder_stack
         self.daily_list = builder.daily_reminder_list
         self.main_calendar = builder.reminders_calendar
+        self.daily_header_label = builder.daily_header_label
         
         # New Add Button in Header
         self.add_btn = builder.reminders_add_btn
+        self.empty_add_btn = builder.reminders_empty_add_btn
         
         # Import/Export Buttons
         self.export_btn = builder.reminders_export_btn
@@ -104,36 +108,30 @@ class RemindersView:
 
         # --- Connect Signals ---
         self.add_btn.connect("clicked", self._show_add_reminder_dialog)
+        self.empty_add_btn.connect("clicked", self._show_add_reminder_dialog)
         self.export_btn.connect("clicked", self._on_export_clicked)
         self.import_btn.connect("clicked", self._on_import_clicked)
 
     def refresh(self):
         """Reloads the reminder list from the database."""
-        self._update_marks()
-        self._update_daily_list()
-        self._update_upcoming_list()
-
-    def _update_marks(self):
         reminders = self.db.get_reminders()
-        self.main_calendar.clear_marks()
-        for _, _, date_str in reminders:
-            try:
-                parts = date_str.split('-')
-                if len(parts) == 3:
-                    y, m, d = int(parts[0]), int(parts[1]), int(parts[2])
-                    current_date = self.main_calendar.get_date()
-                    if current_date.get_year() == y and current_date.get_month() == m:
-                         self.main_calendar.mark_day(d)
-            except ValueError:
-                pass
+        
+        if not reminders:
+            self.root_stack.set_visible_child_name("empty")
+        else:
+            self.root_stack.set_visible_child_name("content")
+            self._update_daily_list(reminders)
+            self._update_upcoming_list(reminders)
 
-    def _update_daily_list(self):
+    def _update_daily_list(self, reminders=None):
         self._clear_list(self.daily_list)
         
         dt = self.main_calendar.get_date()
         date_str = dt.format("%Y-%m-%d")
         
-        reminders = self.db.get_reminders()
+        if reminders is None:
+            reminders = self.db.get_reminders()
+            
         # Filter for this date
         day_tasks = [r for r in reminders if r[2] == date_str]
         
@@ -152,29 +150,81 @@ class RemindersView:
                 row.add_suffix(del_btn)
                 self.daily_list.append(row)
 
-    def _update_upcoming_list(self):
+    def _update_upcoming_list(self, reminders):
         self._clear_list(self.upcoming_list)
-        reminders = self.db.get_reminders()
         
         if not reminders:
-            self.upcoming_stack.set_visible_child_name("empty")
-        else:
-            self.upcoming_stack.set_visible_child_name("list")
-            for r_id, task, date in reminders:
-                row = Adw.ActionRow(title=task)
-                row.set_subtitle(f"Due: {date}")
-                
-                # Delete button
-                del_btn = Gtk.Button(icon_name="feather-check-symbolic", valign=Gtk.Align.CENTER)
-                del_btn.add_css_class("flat")
-                del_btn.connect("clicked", lambda b, rid=r_id, r=row: self._remove_reminder(rid, r))
-                
-                row.add_suffix(del_btn)
-                self.upcoming_list.append(row)
+            # We don't have a specific empty state for the list anymore,
+            # as the global empty state handles the "0 items" case.
+            # If we are here, it means we have items (handled by refresh), OR we might be in a filtered state?
+            # Actually, refresh() checks global emptiness.
+            # If we are in "content" view, we show the list.
+            pass 
+        
+        for r_id, task, date in reminders:
+            row = Adw.ActionRow(title=task)
+            row.set_subtitle(f"Due: {date}")
+            
+            # Delete button
+            del_btn = Gtk.Button(icon_name="feather-check-symbolic", valign=Gtk.Align.CENTER)
+            del_btn.add_css_class("flat")
+            del_btn.connect("clicked", lambda b, rid=r_id, r=row: self._remove_reminder(rid, r))
+            
+            row.add_suffix(del_btn)
+            self.upcoming_list.append(row)
 
     def _on_main_calendar_day_selected(self, calendar, pspec=None):
-        self._update_marks() # In case month changed
-        self._update_daily_list()
+        reminders = self.db.get_reminders()
+        self._update_daily_list(reminders)
+        
+        dt = self.main_calendar.get_date()
+        date_str = dt.format("%Y-%m-%d")
+        self.daily_header_label.set_label(dt.format("%A, %B %d"))
+        
+        threading.Thread(target=self._fetch_weather_for_date, args=(date_str,), daemon=True).start()
+
+    def _fetch_weather_for_date(self, date_str):
+        try:
+            config = self.window.get_application().config
+            city = config.get("city", "Winnipeg")
+            
+            geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1&language=en&format=json"
+            geo_resp = requests.get(geo_url, timeout=5).json()
+            
+            if not geo_resp.get("results"):
+                return
+
+            location = geo_resp["results"][0]
+            lat, lon = location["latitude"], location["longitude"]
+            
+            weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&daily=weathercode,temperature_2m_max,precipitation_probability_max&timezone=auto&start_date={date_str}&end_date={date_str}"
+            
+            response = requests.get(weather_url, timeout=5).json()
+            
+            if "daily" in response:
+                daily = response["daily"]
+                if daily.get("time") and daily["time"][0] == date_str:
+                    temp_max = daily["temperature_2m_max"][0]
+                    precip = daily["precipitation_probability_max"][0]
+                    
+                    GLib.idle_add(self._update_weather_label, date_str, temp_max, precip)
+                    
+        except Exception as e:
+            print(f"Weather fetch error: {e}")
+
+    def _update_weather_label(self, date_str, temp, precip):
+        try:
+             dt_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+             date_text = dt_obj.strftime("%A, %B %d")
+        except:
+             date_text = date_str
+             
+        weather_desc = f"{temp}°C"
+        if precip is not None:
+            weather_desc += f" • {precip}% Rain"
+            
+        full_text = f"{date_text}\n{weather_desc}"
+        self.daily_header_label.set_label(full_text)
 
     def _show_add_reminder_dialog(self, btn):
         dialog = Adw.AlertDialog(

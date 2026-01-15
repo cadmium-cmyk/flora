@@ -30,6 +30,7 @@ class PlantDetailView:
         self.date_added_row = builder.detail_date
         self.days_owned_row = builder.detail_counter
         self.watered_row = builder.detail_watered_row
+        self.timeline_group = builder.timeline_group
         self.btn_save = builder.detail_save_btn
         self.dropdown = builder.detail_assign_dropdown
         self.btn_water = builder.water_button
@@ -111,6 +112,7 @@ class PlantDetailView:
     def _populate_existing_plant(self, record):
         added_str, notes, watered, habit, harvest, light, common, sci, family, genus, year, bib, edible, veg = record
         
+        self.timeline_group.set_visible(True)
         self.date_added_row.set_subtitle(f"Added on {added_str}")
         self._calculate_days_owned(added_str)
         
@@ -135,6 +137,7 @@ class PlantDetailView:
         self.btn_delete.set_visible(True)
 
     def _populate_new_plant(self, p):
+        self.timeline_group.set_visible(False)
         self.date_added_row.set_subtitle("Not in collection")
         self.days_owned_row.set_subtitle("—")
         self.notes_view.get_buffer().set_text("")

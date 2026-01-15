@@ -38,14 +38,10 @@ class PlantWindow(Adw.ApplicationWindow):
     sidebar_list = Gtk.Template.Child()
     sidebar_close_btn = Gtk.Template.Child()
     
-    # Toggle buttons (Sidebar toggle)
-    sidebar_btn_1 = Gtk.Template.Child()
-    sidebar_btn_2 = Gtk.Template.Child()
-    sidebar_btn_3 = Gtk.Template.Child()
-    sidebar_btn_4 = Gtk.Template.Child()
-    sidebar_btn_5 = Gtk.Template.Child()
-    sidebar_btn_6 = Gtk.Template.Child()
-    sidebar_btn_7 = Gtk.Template.Child()
+    # Shared Header
+    sidebar_toggle_btn = Gtk.Template.Child()
+    header_title = Gtk.Template.Child()
+    header_actions_stack = Gtk.Template.Child()
 
     # We declare these here so the 'builder' (self) has references to them 
     # to pass to the View classes.
@@ -81,6 +77,7 @@ class PlantWindow(Adw.ApplicationWindow):
     detail_date = Gtk.Template.Child()
     detail_counter = Gtk.Template.Child()
     detail_watered_row = Gtk.Template.Child()
+    timeline_group = Gtk.Template.Child()
     detail_save_btn = Gtk.Template.Child()
     detail_assign_dropdown = Gtk.Template.Child()
     water_button = Gtk.Template.Child()
@@ -90,12 +87,14 @@ class PlantWindow(Adw.ApplicationWindow):
     image_spinner = Gtk.Template.Child()
 
     # Reminders
-    reminder_stack = Gtk.Template.Child()
+    reminders_root_stack = Gtk.Template.Child()
     reminder_list = Gtk.Template.Child()
     daily_reminder_stack = Gtk.Template.Child()
     daily_reminder_list = Gtk.Template.Child()
     reminders_calendar = Gtk.Template.Child()
+    daily_header_label = Gtk.Template.Child()
     reminders_add_btn = Gtk.Template.Child()
+    reminders_empty_add_btn = Gtk.Template.Child()
     reminders_export_btn = Gtk.Template.Child()
     reminders_import_btn = Gtk.Template.Child()
     
@@ -113,7 +112,6 @@ class PlantWindow(Adw.ApplicationWindow):
     editor_bold_btn = Gtk.Template.Child()
     editor_italic_btn = Gtk.Template.Child()
     editor_underline_btn = Gtk.Template.Child()
-    editor_bullet_btn = Gtk.Template.Child()
     editor_align_left_btn = Gtk.Template.Child()
     editor_align_right_btn = Gtk.Template.Child()
     editor_align_center_btn = Gtk.Template.Child()
@@ -315,9 +313,7 @@ class PlantWindow(Adw.ApplicationWindow):
         self.view_stack.connect("notify::visible-child", self.on_tab_changed)
         
         # Sidebar Toggles
-        for btn in [self.sidebar_btn_1, self.sidebar_btn_2, self.sidebar_btn_3, 
-                   self.sidebar_btn_4, self.sidebar_btn_5, self.sidebar_btn_6, self.sidebar_btn_7]:
-            btn.connect("clicked", self.on_sidebar_toggle_clicked)
+        self.sidebar_toggle_btn.connect("clicked", self.on_sidebar_toggle_clicked)
         
         # Sidebar Close Button
         self.sidebar_close_btn.connect("clicked", self.on_sidebar_close_clicked)
@@ -386,8 +382,32 @@ class PlantWindow(Adw.ApplicationWindow):
     def on_tab_changed(self, stack, pspec):
         """
         When the user switches tabs, tell the relevant view to refresh its data.
+        Also updates the global header bar title and actions.
         """
         target = stack.get_visible_child_name()
+        
+        titles = {
+            "home_view": "Dashboard",
+            "search_view": "Plant Search",
+            "fav_view": "My Plants",
+            "reminders_view": "Task List",
+            "journal_view": "Journal",
+            "layouts_view": "My Gardens",
+            "settings_view": "Settings"
+        }
+        
+        actions = {
+            "home_view": "default",
+            "search_view": "default",
+            "fav_view": "fav_actions",
+            "reminders_view": "reminders_actions",
+            "journal_view": "journal_actions",
+            "layouts_view": "layouts_actions",
+            "settings_view": "default"
+        }
+        
+        self.header_title.set_title(titles.get(target, "Flora"))
+        self.header_actions_stack.set_visible_child_name(actions.get(target, "default"))
         
         if target == "home_view":
             self.dashboard_view.refresh()
